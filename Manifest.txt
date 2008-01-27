@@ -1,0 +1,7 @@
+History.txt
+Manifest.txt
+README.txt
+Rakefile
+bin/calais
+lib/calais.rb
+test/test_calais.rb
