@@ -1,13 +1,12 @@
 require 'digest/sha1'
-require 'soap/wsdlDriver'
+require 'net/http'
 require 'rexml/document'
 require 'yaml'
 
 $KCODE = "UTF8"
 
 class Calais
-  API_URL = "http://api.opencalais.com/calais/calais.asmx"
-  WSDL_URL = "http://api.opencalais.com/calais/?wsdl"
+  POST_URL = "http://api.opencalais.com"
   
   AVAILABLE_OUTPUT_FORMATS = ["XML/RDF"]
   DEFAULT_OUTPUT_FORMAT = "XML/RDF"
@@ -17,7 +16,7 @@ class Calais
   
   DEFAULT_SUBMITTER = "calais.rb"
   
-  AVAILABLE_METHODS = ["enlighten"]
+  AVAILABLE_METHODS = {"enlighten" => "/enlighten/calais.asmx/Enlighten"}
   
   class << self
     def enlighten(*args, &block) Calais.new(*args, &block).call('enlighten') end
@@ -36,15 +35,27 @@ class Calais
   end
   
   def call(method)
-    raise ArgumentError.new("Unknown method: #{method}") unless AVAILABLE_METHODS.include? method
+    raise ArgumentError.new("Unknown method: #{method}") unless AVAILABLE_METHODS.keys.include? method
     
-    soap = SOAP::WSDLDriverFactory.new(WSDL_URL).create_rpc_driver
-    response = soap.send(method.capitalize, :licenseID => @license_id, :content => @content, :paramsXML => params_xml)
-    soap.reset_stream
+    post_args = {
+      "licenseID" => @license_id,
+      "content" => @content,
+      "paramsXML" => params_xml
+    }
     
-    response.send("#{method}Result")
+    url = URI.parse(POST_URL + AVAILABLE_METHODS[method])
+    
+    resp, data = Net::HTTP.post_form(url, post_args)
+    
+    case resp
+    when Net::HTTPOK
+      doc = REXML::Document.new(data)
+      doc.root.text
+    else
+      raise ServiceError.new("OpenCalais Service Error (#{resp})")
+    end
   end
-
+  
   class ServiceError < Exception; end
   
   private
