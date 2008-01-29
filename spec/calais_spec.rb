@@ -36,7 +36,7 @@ end
 
 describe Calais, ".enlighten" do
   before(:all) do
-    @marked = Calais.enlighten(:content => SAMPLE_DOCUMENT, :content_type => "TEXT/XML")
+    @marked = Calais.enlighten(:content => SAMPLE_DOCUMENT, :content_type => :xml)
   end
   
   it "returns a string" do
@@ -61,7 +61,7 @@ end
 
 describe Calais, ".params_xml" do
   it "returns an xml encoded string" do
-    client = Calais.new(:content => SAMPLE_DOCUMENT, :content_type => "TEXT/XML")
+    client = Calais.new(:content => SAMPLE_DOCUMENT, :content_type => :xml)
     client.send("params_xml").should_not be_nil
     client.send("params_xml").should == %[<c:params xmlns:c=\"http://s.opencalais.com/1/pred/\" xmlns:rdf=\"http://www.w3.org/1999/02/22-rdf-syntax-ns#\"><c:processingDirectives c:contentType=\"TEXT/XML\" c:outputFormat=\"XML/RDF\"></c:processingDirectives><c:userDirectives c:allowDistribution=\"false\" c:allowSearch=\"false\" c:externalID=\"dc68d5a382724c2238d9f22ba9c0b4d2581569d8\" c:submitter=\"calais.rb\"></c:userDirectives><c:externalMetadata></c:externalMetadata></c:params>]
   end

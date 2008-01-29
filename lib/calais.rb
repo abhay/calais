@@ -8,18 +8,26 @@ $KCODE = "UTF8"
 class Calais
   POST_URL = "http://api.opencalais.com"
   
-  AVAILABLE_OUTPUT_FORMATS = ["XML/RDF"]
-  DEFAULT_OUTPUT_FORMAT = "XML/RDF"
+  AVAILABLE_OUTPUT_FORMATS = {
+    :rdf => "XML/RDF"
+  }
+  DEFAULT_OUTPUT_FORMAT = :rdf
   
-  AVAILABLE_CONTENT_TYPES = ["TEXT/XML", "TEXT/TXT", "TEXT/HTML"]
-  DEFAULT_CONTENT_TYPE = "TEXT/TXT"
+  AVAILABLE_CONTENT_TYPES = {
+    :xml => "TEXT/XML",
+    :html => "TEXT/HTML",
+    :text => "TEXT/TXT"
+  }
+  DEFAULT_CONTENT_TYPE = :xml
   
   DEFAULT_SUBMITTER = "calais.rb"
   
-  AVAILABLE_METHODS = {"enlighten" => "/enlighten/calais.asmx/Enlighten"}
+  AVAILABLE_METHODS = {
+    :enlighten => "/enlighten/calais.asmx/Enlighten"
+  }
   
   class << self
-    def enlighten(*args, &block) Calais.new(*args, &block).call('enlighten') end
+    def enlighten(*args, &block) Calais.new(*args, &block).call(:enlighten) end
   end
   
   attr_accessor :license_id
@@ -35,6 +43,7 @@ class Calais
   end
   
   def call(method)
+    method = method.intern unless method.is_a?(Symbol)
     raise ArgumentError.new("Unknown method: #{method}") unless AVAILABLE_METHODS.keys.include? method
     
     post_args = {
@@ -60,8 +69,8 @@ class Calais
   
   private
     def params_xml
-      content_type = @content_type && AVAILABLE_CONTENT_TYPES.include?(@content_type) ? @content_type : DEFAULT_CONTENT_TYPE
-      output_format = @output_format && AVAILABLE_OUTPUT_FORMATS.include?(@output_format) ? @output_format : DEFAULT_OUTPUT_FORMAT
+      content_type = @content_type && AVAILABLE_CONTENT_TYPES.keys.include?(@content_type) ? AVAILABLE_CONTENT_TYPES[@content_type] : AVAILABLE_CONTENT_TYPES[DEFAULT_CONTENT_TYPE]
+      output_format = @output_format && AVAILABLE_OUTPUT_FORMATS.keys.include?(@output_format) ? AVAILABLE_OUTPUT_FORMATS[@output_format] : AVAILABLE_OUTPUT_FORMATS[DEFAULT_OUTPUT_FORMAT]
       allow_distribution = @allow_distribution ? "true" : "false"
       allow_search = @allow_search ? "true" : "false"
       submitter = @submitter || DEFAULT_SUBMITTER
