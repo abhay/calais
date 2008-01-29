@@ -1,3 +1,4 @@
 == UNRELEASED
 
 * Access to Open Calais's Enlighten action
+* Convenience method to all of the names in a document
