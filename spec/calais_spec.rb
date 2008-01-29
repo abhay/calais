@@ -45,6 +45,18 @@ describe Calais, ".enlighten" do
   end
 end
 
+describe Calais, ".names" do
+  before(:all) do
+    @names = Calais.names(:content => SAMPLE_DOCUMENT, :content_type => :xml)
+  end
+  
+  it "returns a hash of key/array pairs" do
+    @names.should_not be_nil
+    @names.should be_a_kind_of(Hash)
+    @names.each_value {|v| v.should be_a_kind_of(Array)}
+  end
+end
+
 describe Calais, ".call" do
   before(:all) do
     @client = Calais.new(:content => SAMPLE_DOCUMENT)

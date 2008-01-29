@@ -28,6 +28,7 @@ class Calais
   
   class << self
     def enlighten(*args, &block) Calais.new(*args, &block).call(:enlighten) end
+    def names(*args, &block) Calais.get_names(Calais.enlighten(*args, &block)) end
   end
   
   attr_accessor :license_id
@@ -62,6 +63,14 @@ class Calais
       doc.root.text
     else
       raise ServiceError.new("OpenCalais Service Error (#{resp})")
+    end
+  end
+  
+  def self.get_names(rdf)
+    REXML::Document.new(rdf).elements.to_a("//rdf:Description/c:name").inject({}) do |hsh, ele|
+      type = ele.parent.elements["rdf:type"].attribute("rdf:resource").value.match(%r{type/em/e/(.*)})[1] rescue nil
+      hsh[type] = hsh[type] ? hsh[type].concat([ele.text]) : [ele.text] if type
+      hsh
     end
   end
   
