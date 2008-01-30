@@ -26,6 +26,8 @@ class Calais
     :enlighten => "/enlighten/calais.asmx/Enlighten"
   }
   
+  MAX_RETRIES = 5
+  
   class << self
     def enlighten(*args, &block) Calais.new(*args, &block).call(:enlighten) end
     def names(*args, &block) Calais.get_names(Calais.enlighten(*args, &block)) end
@@ -43,7 +45,7 @@ class Calais
     yield(self) if block_given?
   end
   
-  def call(method)
+  def call(method, times=1)
     method = method.intern unless method.is_a?(Symbol)
     raise ArgumentError.new("Unknown method: #{method}") unless AVAILABLE_METHODS.keys.include? method
     
@@ -54,27 +56,29 @@ class Calais
     }
     
     url = URI.parse(POST_URL + AVAILABLE_METHODS[method])
-    
     resp, data = Net::HTTP.post_form(url, post_args)
-    
-    case resp
-    when Net::HTTPOK
-      doc = REXML::Document.new(data)
-      doc.root.text
+    handle_response(resp, data, post_args, method, times)
+  end
+  
+  def handle_response(resp, data, post_args, method, times)
+    if resp.is_a?(Net::HTTPOK)
+      REXML::Document.new(data).root.text
+    elsif times >= MAX_RETRIES
+      %[<?xml version="1.0" encoding="utf-8"?>\n<error>Too many retries (#{MAX_RETRIES}.\nLast response was #{resp})</error>]
     else
-      raise ServiceError.new("OpenCalais Service Error (#{resp})")
+      call(method, times+1)
     end
   end
   
   def self.get_names(rdf)
-    REXML::Document.new(rdf).elements.to_a("//rdf:Description/c:name").inject({}) do |hsh, ele|
+    doc = REXML::Document.new(rdf)
+    return {} if doc.elements["error"]
+    doc.root.elements.to_a("//rdf:Description/c:name").inject({}) do |hsh, ele|
       type = ele.parent.elements["rdf:type"].attribute("rdf:resource").value.match(%r{type/em/e/(.*)})[1] rescue nil
       hsh[type] = hsh[type] ? hsh[type].concat([ele.text]) : [ele.text] if type
       hsh
     end
   end
-  
-  class ServiceError < Exception; end
   
   private
     def params_xml
