@@ -8,9 +8,10 @@ A Ruby interface to the Open Calais API (http://opencalais.com)
 
 == FEATURES/PROBLEMS:
 
-* Basic access to the Open Calais API's Enlighten action.
 * Accepts documents in text/plain, text/xml and text/html format.
-* Output is RDF representation of input document.
+* Basic access to the Open Calais API's Enlighten action.
+	* Output is RDF representation of input document.
+* Single function ability to tag a document and receive a response in RDF format, names in the document, and their relationships.
 
 == SYNOPSIS:
 
@@ -20,18 +21,17 @@ This is a very basic wrapper to the Open Calais API. It uses the POST endpoint a
 
 This is the easiest way to get the RDF-formated response from the OpenCalais service.
 
-If you want to do something more fun like getting all the names from a body of text, try this:
+If you want to do something more fun like getting all sorts of fun information about a document, you can try this:
 
-  Calais.names(:content => "The government of the United Kingdom has given corporations like fast food chain McDonald's the right to award high school qualifications to employees who complete a company training program.", :content_type => :text)
+  Calais.process_document(:content => "The government of the United Kingdom has given corporations like fast food chain McDonald's the right to award high school qualifications to employees who complete a company training program.", :content_type => :text)
 
-This will return an hash of arrays that would look like this:
-
-  {"Country"=>["United Kingdom"], "Company"=>["McDonald's"], "IndustryTerm"=>["food chain"]}
+This will return an object containing the RDF representation of the text, the names in the text, and any relationships that exist there.
 
 == REQUIREMENTS:
 
 * Ruby 1.8.5 or better
-  * Uses the following standard libraries: digest/sha1, net/http, rexml/document, yaml
+  * Uses the following standard libraries: digest/sha1, net/http, yaml, cgi
+* Hpricot
 
 == INSTALL:
 

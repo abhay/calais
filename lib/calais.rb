@@ -1,11 +1,16 @@
 require 'digest/sha1'
 require 'net/http'
-require 'rexml/document'
 require 'yaml'
+require 'cgi'
+
+require 'rubygems'
+require 'hpricot'
 
 $KCODE = "UTF8"
 
-class Calais
+Dir.glob(File.join(File.dirname(__FILE__), 'calais/*.rb')).each { |f| require f }
+
+module Calais
   POST_URL = "http://api.opencalais.com"
   
   AVAILABLE_OUTPUT_FORMATS = {
@@ -29,75 +34,14 @@ class Calais
   MAX_RETRIES = 5
   
   class << self
-    def enlighten(*args, &block) Calais.new(*args, &block).call(:enlighten) end
-    def names(*args, &block) Calais.get_names(Calais.enlighten(*args, &block)) end
-  end
-  
-  attr_accessor :license_id
-  attr_accessor :content
-  attr_accessor :content_type, :output_format
-  attr_accessor :allow_distribution, :allow_search, :submitter, :external_id
-  attr_accessor :external_metadata
-  
-  def initialize(options={}, &block)
-    @license_id = YAML.load(File.read(File.join(File.dirname(__FILE__), '..', 'conf', 'calais.yml')))['key']
-    options.each {|k,v| send("#{k}=", v)}
-    yield(self) if block_given?
-  end
-  
-  def call(method, times=1)
-    method = method.intern unless method.is_a?(Symbol)
-    raise ArgumentError.new("Unknown method: #{method}") unless AVAILABLE_METHODS.keys.include? method
-    
-    post_args = {
-      "licenseID" => @license_id,
-      "content" => @content,
-      "paramsXML" => params_xml
-    }
-    
-    url = URI.parse(POST_URL + AVAILABLE_METHODS[method])
-    resp, data = Net::HTTP.post_form(url, post_args)
-    handle_response(resp, data, post_args, method, times)
-  end
-  
-  def handle_response(resp, data, post_args, method, times)
-    if resp.is_a?(Net::HTTPOK)
-      REXML::Document.new(data).root.text
-    elsif times >= MAX_RETRIES
-      %[<?xml version="1.0" encoding="utf-8"?>\n<error>Too many retries (#{MAX_RETRIES}.\nLast response was #{resp})</error>]
-    else
-      call(method, times+1)
+    def enlighten(*args, &block) Client.new(*args, &block).call(:enlighten) end
+    def process_document(*args, &block) 
+      data, error = Calais.enlighten(*args, &block)
+      Client.process_data(data, error)
     end
   end
-  
-  def self.get_names(rdf)
-    doc = REXML::Document.new(rdf)
-    return {} if doc.elements["error"]
-    doc.root.elements.to_a("//rdf:Description/c:name").inject({}) do |hsh, ele|
-      type = ele.parent.elements["rdf:type"].attribute("rdf:resource").value.match(%r{type/em/e/(.*)})[1] rescue nil
-      hsh[type] = hsh[type] ? hsh[type].concat([ele.text]) : [ele.text] if type
-      hsh
-    end
-  end
-  
-  private
-    def params_xml
-      content_type = @content_type && AVAILABLE_CONTENT_TYPES.keys.include?(@content_type) ? AVAILABLE_CONTENT_TYPES[@content_type] : AVAILABLE_CONTENT_TYPES[DEFAULT_CONTENT_TYPE]
-      output_format = @output_format && AVAILABLE_OUTPUT_FORMATS.keys.include?(@output_format) ? AVAILABLE_OUTPUT_FORMATS[@output_format] : AVAILABLE_OUTPUT_FORMATS[DEFAULT_OUTPUT_FORMAT]
-      allow_distribution = @allow_distribution ? "true" : "false"
-      allow_search = @allow_search ? "true" : "false"
-      submitter = @submitter || DEFAULT_SUBMITTER
-      external_id = @external_id || Digest::SHA1.hexdigest(@content.inspect)
-      external_metadata = @external_metadata || ""
-      
-      xml  = %[<c:params xmlns:c="http://s.opencalais.com/1/pred/" xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#">]
-      xml += %[<c:processingDirectives c:contentType="#{content_type}" c:outputFormat="#{output_format}"></c:processingDirectives>]
-      xml += %[<c:userDirectives c:allowDistribution="#{allow_distribution}" c:allowSearch="#{allow_search}" c:externalID="#{external_id}" c:submitter="#{submitter}"></c:userDirectives>]
-      xml += %[<c:externalMetadata>#{external_metadata}</c:externalMetadata>]
-      xml += %[</c:params>]
-    end
 end
 
-class Calais
+module Calais
   VERSION = '0.0.1'
 end
