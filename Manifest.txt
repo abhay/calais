@@ -2,6 +2,13 @@ History.txt
 Manifest.txt
 README.txt
 Rakefile
-bin/calais
 lib/calais.rb
-test/test_calais.rb
+lib/calais/client.rb
+lib/calais/response.rb
+spec/calais_spec.rb
+spec/fixtures/.gitignore
+spec/fixtures/bicycles_austrailia.xml
+spec/fixtures/calais.yml.sample
+spec/fixtures/slovenia_euro.xml
+spec/helper.rb
+spec/spec.opts

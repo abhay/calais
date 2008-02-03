@@ -1,4 +1,4 @@
-== UNRELEASED
+== 0.0.1
 
 * Access to Open Calais's Enlighten action
 * Single point of access to process a document
