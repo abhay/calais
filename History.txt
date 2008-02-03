@@ -1,4 +1,5 @@
 == 0.0.1
 
-* Access to Open Calais's Enlighten action
-* Single point of access to process a document
+* Access to Calais's Enlighten action
+* Single method to process a document
+  * Get relationships and names from a document

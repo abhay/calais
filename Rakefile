@@ -9,10 +9,10 @@ require './lib/calais.rb'
 Hoe.new('calais', Calais::VERSION) do |p|
   p.rubyforge_name = 'calais'
   p.author = 'Abhay Kumar'
+  p.summary = 'A Ruby interface to the Calais Web Service'
+  p.description = p.paragraphs_of('README.txt', 1..9).join("\n\n")
   p.email = 'info@opensynapse.net'
-  p.summary = 'A Ruby library to access the OpenCalais service'
-  p.description = p.paragraphs_of('README.txt', 2..5).join("\n\n")
-  p.url = p.paragraphs_of('README.txt', 0).first.split(/\n/)[1..-1]
+  p.url = 'http://calais.rubyforge.org'
   p.changes = p.paragraphs_of('History.txt', 0..1).join("\n\n")
   p.remote_rdoc_dir = ''
 end
