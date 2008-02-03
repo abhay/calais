@@ -7,7 +7,6 @@ module Calais
     attr_accessor :external_metadata
     
     def initialize(options={}, &block)
-      @license_id = YAML.load(File.read(File.join(File.dirname(__FILE__), '..', '..', 'conf', 'calais.yml')))['key']
       options.each {|k,v| send("#{k}=", v)}
       yield(self) if block_given?
     end
