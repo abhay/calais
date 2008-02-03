@@ -71,16 +71,20 @@ module Calais
           metadata = actor.next_sibling.attributes["rdf:resource"] ? nil : actor.next_sibling.inner_html.strip
           target = metadata ? actor.next_sibling.next_sibling : actor.next_sibling
           
+          actor_name = actor ? Name.find_in_names(actor.attributes["rdf:resource"].split('/').last, @names) : nil
+          target_name = target ? Name.find_in_names(target.attributes["rdf:resource"].split('/').last, @names) :  nil
+
           Calais::Response::Relationship.new(
             :type => relationship.attributes["rdf:resource"].split('/').last,
-            :actor => Name.find_in_names(actor.attributes["rdf:resource"].split('/').last, @names),
-            :target => Name.find_in_names(target.attributes["rdf:resource"].split('/').last, @names),
+            :actor => actor_name,
+            :target => target_name,
             :metadata => metadata
           )
         end
       end
     
     class Name
+      include Comparable
       attr_accessor :name, :type, :hash
       
       def initialize(args={})
