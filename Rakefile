@@ -11,9 +11,9 @@ Hoe.new('calais', Calais::VERSION) do |p|
   p.author = 'Abhay Kumar'
   p.email = 'info@opensynapse.net'
   p.summary = 'A Ruby library to access the OpenCalais service'
-  p.description = p.paragraphs_of('README', 2..5).join("\n\n")
-  p.url = p.paragraphs_of('README', 0).first.split(/\n/)[1..-1]
-  p.changes = p.paragraphs_of('CHANGELOG', 0..1).join("\n\n")
+  p.description = p.paragraphs_of('README.txt', 2..5).join("\n\n")
+  p.url = p.paragraphs_of('README.txt', 0).first.split(/\n/)[1..-1]
+  p.changes = p.paragraphs_of('History.txt', 0..1).join("\n\n")
 end
 
 desc "Run all specs"
