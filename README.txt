@@ -30,7 +30,7 @@ This will return an object containing the RDF representation of the text, the na
 
 == Install
 
-TODO
+You can install the Calais gem via Rubygems (gem install calais) or by building from source.
 
 == Authors
 
