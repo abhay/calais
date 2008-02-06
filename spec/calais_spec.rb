@@ -36,17 +36,25 @@ describe Calais::Client, ".new" do
 end
 
 describe Calais, ".process_document" do
+  before(:all) { @response = Calais.process_document(:content => SAMPLE_DOCUMENT, :content_type => :xml, :license_id => LICENSE_ID) }
+
   it "returns a Calais::Response" do
-    response = Calais.process_document(:content => SAMPLE_DOCUMENT, :content_type => :xml, :license_id => LICENSE_ID)
-    response.should_not be_nil
-    response.should be_a_kind_of(Calais::Response)
+    @response.should_not be_nil
+    @response.should be_a_kind_of(Calais::Response)
+  end
+  
+  it "returns names" do
+    @response.names.should_not be_nil
+    @response.names.should_not be_empty
+    @response.names.map {|n| n.name }.sort.should  == ["Australia", "Australia", "Cycling Promotion Fund", "Ian Christie", "car manufacturers", "car market", "car sales", "company car"]
+  end
+  
+  it "returns relationships" do
+    @response.relationships.should_not be_nil
+    @response.relationships.should_not be_empty
+    @response.relationships.map {|r| r.type }.should == ["PersonProfessional"]
   end
 
-  it "returns a Calais::Response (with relationships)" do
-    response = Calais.process_document(:content => File.read(File.join(File.dirname(__FILE__), 'fixtures', 'bicycles_austrailia.xml')), :content_type => :xml, :license_id => LICENSE_ID)
-    response.should_not be_nil
-    response.should be_a_kind_of(Calais::Response)
-  end
 end
 
 describe Calais::Client, ".call" do
@@ -67,6 +75,6 @@ describe Calais::Client, ".params_xml" do
   it "returns an xml encoded string" do
     client = Calais::Client.new(:content => SAMPLE_DOCUMENT, :content_type => :xml, :license_id => LICENSE_ID)
     client.send("params_xml").should_not be_nil
-    client.send("params_xml").should == %[<c:params xmlns:c=\"http://s.opencalais.com/1/pred/\" xmlns:rdf=\"http://www.w3.org/1999/02/22-rdf-syntax-ns#\"><c:processingDirectives c:contentType=\"TEXT/XML\" c:outputFormat=\"XML/RDF\"></c:processingDirectives><c:userDirectives c:allowDistribution=\"false\" c:allowSearch=\"false\" c:externalID=\"dc68d5a382724c2238d9f22ba9c0b4d2581569d8\" c:submitter=\"calais.rb\"></c:userDirectives><c:externalMetadata></c:externalMetadata></c:params>]
+    client.send("params_xml").should == %[<c:params xmlns:c=\"http://s.opencalais.com/1/pred/\" xmlns:rdf=\"http://www.w3.org/1999/02/22-rdf-syntax-ns#\"><c:processingDirectives c:contentType=\"TEXT/XML\" c:outputFormat=\"XML/RDF\"></c:processingDirectives><c:userDirectives c:allowDistribution=\"false\" c:allowSearch=\"false\" c:externalID=\"4a661f3cd285d43fa4df971e14e623eb51748e27\" c:submitter=\"calais.rb\"></c:userDirectives><c:externalMetadata></c:externalMetadata></c:params>]
   end
 end
