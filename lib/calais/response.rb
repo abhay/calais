@@ -87,7 +87,6 @@ module Calais
       
       def parse_relationships(doc)
         relationship_elements = doc.root.search("rdf:Description")
-        
         @relationships = relationship_elements.map do |ele|
           next if ele.at("c:docId")
 
@@ -119,7 +118,6 @@ module Calais
             :locations => locations
           )
         end.compact
-        
         relationship_elements.remove
         
         doc
