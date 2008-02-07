@@ -1,3 +1,9 @@
+== UNRELEASED
+
+* cleanup in the specs
+* cleaner parsing
+* location of named entities
+
 == 0.0.1
 
 * Access to Calais's Enlighten action
