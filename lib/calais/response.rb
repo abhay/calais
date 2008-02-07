@@ -56,10 +56,8 @@ module Calais
       end
       
       def parse_names(doc)
-        @names = []
         name_elements = doc.root.search("//rdf:Description//c:name//..")
-
-        name_elements.each do |ele|
+        @names = name_elements.map do |ele|
           name = ele.at("c:name").inner_html
           type = ele.at("rdf:type").attributes["rdf:resource"].split("/").last
           hash = ele.attributes["rdf:about"].split("/").last
@@ -75,7 +73,12 @@ module Calais
           
           detection_nodes.remove
           
-          @names += [Name.new(:name => name, :hash => hash, :type => type, :locations => locations)]
+          Name.new(
+            :name => name,
+            :hash => hash,
+            :type => type,
+            :locations => locations
+          )
         end
         name_elements.remove
         
