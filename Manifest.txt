@@ -1,9 +1,12 @@
 History.txt
+MIT-LICENSE
 Manifest.txt
 README.txt
 Rakefile
 lib/calais.rb
 lib/calais/client.rb
+lib/calais/name.rb
+lib/calais/relationship.rb
 lib/calais/response.rb
 spec/calais_spec.rb
 spec/fixtures/.gitignore

@@ -1,4 +1,4 @@
-== UNRELEASED
+== 0.0.2
 
 * cleanup in the specs
 * cleaner parsing
