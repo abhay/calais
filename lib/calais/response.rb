@@ -83,24 +83,42 @@ module Calais
       end
       
       def parse_relationships(doc)
-        doc.root.search("rdf:Description//c:docId//..").remove
+        relationship_elements = doc.root.search("rdf:Description")
         
-        @relationships = doc.root.search("rdf:Description").map do |ele|
-          relationship = ele.at("rdf:type")
-          actor = relationship.next_sibling
-          metadata = actor.next_sibling.attributes["rdf:resource"] ? nil : actor.next_sibling.inner_html.strip
-          target = metadata ? actor.next_sibling.next_sibling : actor.next_sibling
-          
-          actor_name = actor ? Name.find_in_names(actor.attributes["rdf:resource"].split('/').last, @names) : nil
-          target_name = target ? Name.find_in_names(target.attributes["rdf:resource"].split('/').last, @names) :  nil
+        @relationships = relationship_elements.map do |ele|
+          next if ele.at("c:docId")
 
+          hash = ele.attributes["rdf:about"].split("/").last
+          type = ele.at("rdf:type").attributes["rdf:resource"].split("/").last
+          metadata = {}
+          ele.children.each do |child|
+            next if child.comment? || child.name == "rdf:type"
+            
+            value = if child.attributes["rdf:resource"]
+                Name.find_in_names(child.attributes["rdf:resource"].split("/").last, @names) rescue nil
+              else
+                child.inner_html.strip
+              end
+            metadata[child.name.split(":").last] = value
+          end
+          
+          locations = doc.root.search("//rdf:Description//c:docId//..").collect! do |ele|
+            ele unless ele.at("c:subject").attributes["rdf:resource"].match(hash).nil?
+          end.compact.map do |ele|
+            start = ele.at("c:offset").inner_html.to_i
+            Range.new(start, start+ele.at("c:length").inner_html.to_i)
+          end
+          
           Calais::Response::Relationship.new(
-            :type => relationship.attributes["rdf:resource"].split('/').last,
-            :actor => actor_name,
-            :target => target_name,
-            :metadata => metadata
+            :type => type,
+            :hash => hash,
+            :metadata => metadata,
+            :locations => locations
           )
-        end
+        end.compact
+        
+        relationship_elements.remove
+        
         doc
       end
     
@@ -118,7 +136,7 @@ module Calais
     end
     
     class Relationship
-      attr_accessor :type, :actor, :target, :metadata
+      attr_accessor :type, :hash, :metadata, :locations
       
       def initialize(args={})
         args.each {|k,v| send("#{k}=", v)}

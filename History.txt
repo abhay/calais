@@ -3,6 +3,7 @@
 * cleanup in the specs
 * cleaner parsing
 * location of named entities
+* more data in relationships
 
 == 0.0.1
 
