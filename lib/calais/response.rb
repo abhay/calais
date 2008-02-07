@@ -18,36 +18,6 @@ module Calais
       h_doc = parse_relationships(h_doc)
     end
     
-    def to_dot
-      used = []
-      id = @hpricot.at("rdf:Description//c:document//..").attributes["c:externalID"]
-      
-      dot = "digraph \"#{id}\"\n"
-      dot += "{\n"
-      dot += "\tgraph [rankdir=LR, overlap=false];\n"
-      dot += "\tnode [shape = circle];"
-
-      @relationships.each do |rel|
-        dot += "\t\"#{rel.actor.name}\" -> \"#{rel.target.name}\""
-        dot += " ["
-        dot += "label=\""
-        dot += "#{rel.metadata} " if rel.metadata
-        dot += "(#{rel.type})"
-        dot += "\"];\n"
-        used |= [rel.actor.hash, rel.target.hash]
-      end
-      
-      @names.each do |name|
-        dot += "\t\"#{name.name}\";\n" unless used.include?(name.hash)
-      end
-      dot += "}\n"
-      
-      f = File.open("#{id}.dot", 'w')
-      f.puts dot
-      f.close
-      
-    end
-    
     private
       def parse_rdf(raw)
         @rdf = CGI::unescapeHTML Hpricot.XML(raw).at("/string").inner_html
