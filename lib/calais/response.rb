@@ -81,7 +81,7 @@ module Calais
             Range.new(start, start+ele.at("c:length").inner_html.to_i)
           end
           
-          Calais::Response::Relationship.new(
+          Relationship.new(
             :type => type,
             :hash => hash,
             :metadata => metadata,
@@ -92,26 +92,5 @@ module Calais
         
         doc
       end
-    
-    class Name
-      include Comparable
-      attr_accessor :name, :type, :hash, :locations
-      
-      def initialize(args={})
-        args.each {|k,v| send("#{k}=", v)}
-      end
-      
-      def self.find_in_names(hash, names)
-        names.select {|name| name.hash == hash }.first
-      end
-    end
-    
-    class Relationship
-      attr_accessor :type, :hash, :metadata, :locations
-      
-      def initialize(args={})
-        args.each {|k,v| send("#{k}=", v)}
-      end
-    end
   end
 end

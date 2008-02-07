@@ -4,6 +4,7 @@
 * cleaner parsing
 * location of named entities
 * more data in relationships
+* moved Names and Relationships
 
 == 0.0.1
 
