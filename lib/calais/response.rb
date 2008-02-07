@@ -8,8 +8,14 @@ module Calais
       @relationships = []
 
       parse_rdf(raw)
-      parse_names
-      parse_relationships
+      return if @error
+
+      h_doc = Hpricot.XML(@rdf)
+      document_node = h_doc.root.search("//rdf:Description//c:document//..").remove.first
+      signature_node = h_doc.root.search("//rdf:Description//c:signature//..").remove.first
+      language_node = h_doc.root.search("//rdf:Description//c:lang//..").remove.first
+      h_doc = parse_names(h_doc)
+      h_doc = parse_relationships(h_doc)
     end
     
     def to_dot
@@ -49,21 +55,35 @@ module Calais
         @error = Hpricot.XML(response).at("/Error/Exception").inner_html rescue @error
       end
       
-      def parse_names
-        @names = @hpricot.root.search("rdf:Description//c:name//..").map do |ele|
-          Calais::Response::Name.new(
-            :name => ele.at("c:name").inner_html,
-            :hash => ele.attributes["rdf:about"].split('/').last,
-            :type => ele.at("rdf:type").attributes["rdf:resource"].split('/').last
-          )
-        end unless @error
+      def parse_names(doc)
+        @names = []
+        name_elements = doc.root.search("//rdf:Description//c:name//..")
+
+        name_elements.each do |ele|
+          name = ele.at("c:name").inner_html
+          type = ele.at("rdf:type").attributes["rdf:resource"].split("/").last
+          hash = ele.attributes["rdf:about"].split("/").last
+          
+          detection_nodes = doc.root.search("//rdf:Description//c:subject//..").collect! do |ele|
+            ele unless ele.at("c:subject").attributes["rdf:resource"].match(hash).nil?
+          end.compact
+          
+          locations = detection_nodes.map do |ele|
+            start = ele.at("c:offset").inner_html.to_i
+            Range.new(start, start+ele.at("c:length").inner_html.to_i)
+          end
+          
+          detection_nodes.remove
+          
+          @names += [Name.new(:name => name, :hash => hash, :type => type, :locations => locations)]
+        end
+        name_elements.remove
+        
+        doc
       end
       
-      def parse_relationships
-        doc = Hpricot.XML(@rdf)
-        doc.search("rdf:Description//c:docId//..").remove
-        doc.search("rdf:Description//c:document//..").remove
-        doc.search("rdf:Description//c:name//..").remove
+      def parse_relationships(doc)
+        doc.root.search("rdf:Description//c:docId//..").remove
         
         @relationships = doc.root.search("rdf:Description").map do |ele|
           relationship = ele.at("rdf:type")
@@ -81,11 +101,12 @@ module Calais
             :metadata => metadata
           )
         end
+        doc
       end
     
     class Name
       include Comparable
-      attr_accessor :name, :type, :hash
+      attr_accessor :name, :type, :hash, :locations
       
       def initialize(args={})
         args.each {|k,v| send("#{k}=", v)}
