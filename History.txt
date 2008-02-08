@@ -1,3 +1,8 @@
+== UNRELEASED
+
+* pluginized the library for Rails (via pius: http://gitorious.org/projects/calais-au-rails)
+* added helper methods name entity types from a response (recommendation by pius)
+
 == 0.0.2
 
 * cleanup in the specs

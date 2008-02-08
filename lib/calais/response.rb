@@ -18,6 +18,12 @@ module Calais
       h_doc = parse_relationships(h_doc)
     end
     
+    Name::TYPES.each_pair do |method_name, type|
+      define_method method_name.to_sym do
+        @names.map {|name| name if name.type == type }.compact
+      end
+    end
+    
     private
       def parse_rdf(raw)
         @rdf = CGI::unescapeHTML Hpricot.XML(raw).at("/string").inner_html
