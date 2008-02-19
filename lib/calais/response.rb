@@ -7,15 +7,11 @@ module Calais
       @names = []
       @relationships = []
 
-      parse_rdf(raw)
+      parse_raw(raw)
       return if @error
-
-      h_doc = Hpricot.XML(@rdf)
-      document_node = h_doc.root.search("//rdf:Description//c:document//..").remove.first
-      signature_node = h_doc.root.search("//rdf:Description//c:signature//..").remove.first
-      language_node = h_doc.root.search("//rdf:Description//c:lang//..").remove.first
-      h_doc = parse_names(h_doc)
-      h_doc = parse_relationships(h_doc)
+      
+      parse_names
+      parse_relationships
     end
     
     Name::TYPES.each_pair do |method_name, type|
@@ -25,29 +21,22 @@ module Calais
     end
     
     private
-      def parse_rdf(raw)
-        @rdf = CGI::unescapeHTML Hpricot.XML(raw).at("/string").inner_html
-        @hpricot = Hpricot.XML(@rdf)
-        @error = Hpricot.XML(response).at("/Error/Exception").inner_html rescue @error
+      def parse_raw(raw)
+        @libxml = XML::Parser.string(XML::Parser.string(raw).parse.root.child.content).parse
+        @rdf = @libxml.to_s
+        @error = @libxml.find("/Error/Exception").first.content rescue @error
       end
       
-      def parse_names(doc)
-        name_elements = doc.root.search("//rdf:Description//c:name//..")
-        @names = name_elements.map do |ele|
-          name = ele.at("c:name").inner_html
-          type = ele.at("rdf:type").attributes["rdf:resource"].split("/").last
-          hash = ele.attributes["rdf:about"].split("/").last
+      def parse_names
+        @names = @libxml.root.find("rdf:Description/rdf:type[contains(@rdf:resource, '/em/e/')]/..").map do |n|
+          name = n.find_first("c:name").content
+          type = n.find_first("rdf:type").properties.to_a.assoc("resource").last.split('/').last
+          hash = n.properties.to_a.assoc("about").last.split("/").last
           
-          detection_nodes = doc.root.search("//rdf:Description//c:subject//..").collect! do |ele|
-            ele unless ele.at("c:subject").attributes["rdf:resource"].match(hash).nil?
-          end.compact
-          
-          locations = detection_nodes.map do |ele|
-            start = ele.at("c:offset").inner_html.to_i
-            Range.new(start, start+ele.at("c:length").inner_html.to_i)
+          locations = @libxml.root.find("rdf:Description/c:subject[contains(@rdf:resource, '#{hash}')]/..").map do |n2|
+            start = n2.find_first("c:offset").content.to_i
+            Range.new(start, start+n2.find_first("c:length").content.to_i)
           end
-          
-          detection_nodes.remove
           
           Name.new(
             :name => name,
@@ -56,47 +45,34 @@ module Calais
             :locations => locations
           )
         end
-        name_elements.remove
-        
-        doc
       end
       
-      def parse_relationships(doc)
-        relationship_elements = doc.root.search("rdf:Description")
-        @relationships = relationship_elements.map do |ele|
-          next if ele.at("c:docId")
-
-          hash = ele.attributes["rdf:about"].split("/").last
-          type = ele.at("rdf:type").attributes["rdf:resource"].split("/").last
+      def parse_relationships
+        @libxml.root.find("rdf:Description/rdf:type[contains(@rdf:resource, '/em/r')]/..").each do |n|
+          hash = n.properties.to_a.assoc("about").last.split("/").last
+          type = n.find_first("rdf:type").properties.to_a.assoc("resource").last.split('/').last
+          
           metadata = {}
-          ele.children.each do |child|
-            next if child.comment? || child.name == "rdf:type"
-            
-            value = if child.attributes["rdf:resource"]
-                Name.find_in_names(child.attributes["rdf:resource"].split("/").last, @names) rescue nil
-              else
-                child.inner_html.strip
-              end
-            metadata[child.name.split(":").last] = value
+          
+          n.to_a.each do |n2|
+            next if n2.name == "type" or n2.comment?
+            resource = n2.properties.to_a.assoc("resource")
+            metadata[n2.name] = resource ? Name.find_in_names(resource.last.split("/").last, @names) : n2.content.strip
           end
           
-          locations = doc.root.search("//rdf:Description//c:docId//..").collect! do |ele|
-            ele unless ele.at("c:subject").attributes["rdf:resource"].match(hash).nil?
-          end.compact.map do |ele|
-            start = ele.at("c:offset").inner_html.to_i
-            Range.new(start, start+ele.at("c:length").inner_html.to_i)
+          locations = @libxml.root.find("rdf:Description/c:subject[contains(@rdf:resource, '#{hash}')]/..").map do |n2|
+            start = n2.find_first("c:offset").content.to_i
+            Range.new(start, start+n2.find_first("c:length").content.to_i)
           end
           
-          Relationship.new(
+          
+          @relationships << Relationship.new(
             :type => type,
             :hash => hash,
             :metadata => metadata,
             :locations => locations
           )
-        end.compact
-        relationship_elements.remove
-        
-        doc
+        end
       end
   end
 end

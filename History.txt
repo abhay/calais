@@ -1,3 +1,8 @@
+== UNRELEASED
+
+* changed dependency from hpricot to libxml
+* utf fun
+
 == 0.0.3
 
 * pluginized the library for Rails (via pius: http://gitorious.org/projects/calais-au-rails)

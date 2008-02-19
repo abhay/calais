@@ -1,12 +1,13 @@
 require 'digest/sha1'
 require 'net/http'
-require 'yaml'
 require 'cgi'
+require 'iconv'
 
 require 'rubygems'
-require 'hpricot'
+require 'xml/libxml'
 
 $KCODE = "UTF8"
+require 'jcode'
 
 Dir.glob(File.join(File.dirname(__FILE__), 'calais/*.rb')).each { |f| require f }
 

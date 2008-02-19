@@ -17,7 +17,7 @@ module Calais
       
       post_args = {
         "licenseID" => @license_id,
-        "content" => @content,
+        "content" => Iconv.iconv('UTF-8//IGNORE', 'UTF-8',  "#{@content} ").first[0..-2],
         "paramsXML" => params_xml
       }
       

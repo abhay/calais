@@ -26,7 +26,7 @@ This will return an object containing the RDF representation of the text, the na
 
 * Ruby 1.8.5 or better
   * Uses the following standard libraries: digest/sha1, net/http, yaml, cgi
-* Hpricot
+* libxml2 / libxml-ruby
 
 == Install
 
