@@ -1,7 +1,8 @@
-== UNRELEASED
+== 0.0.4
 
 * changed dependency from hpricot to libxml
 * utf fun
+* cleanup all around
 
 == 0.0.3
 
