@@ -11,7 +11,7 @@ module Calais
       yield(self) if block_given?
     end
     
-    def call(method, times=1)
+    def call(method)
       method = method.intern unless method.is_a?(Symbol)
       raise ArgumentError.new("Unknown method: #{method}") unless AVAILABLE_METHODS.keys.include? method
       
@@ -24,24 +24,10 @@ module Calais
       url = URI.parse(POST_URL + AVAILABLE_METHODS[method])
       resp, data = Net::HTTP.post_form(url, post_args)
       
-      handle_response(resp, data, method, times)
-    end
-    
-    def self.process_data(data, error=nil)
-      Calais::Response.new(data, error)
+      return resp.is_a?(Net::HTTPOK) ? data : [data, "API Error: #{resp}"]
     end
     
     private
-      def handle_response(resp, data, method, times)
-        if resp.is_a? Net::HTTPOK
-          [data, nil]
-        elsif times >= MAX_RETRIES
-          [data, "Too many retries: #{times}"]
-        else
-          call(method, times+1)
-        end
-      end
-      
       def params_xml
         content_type = @content_type && AVAILABLE_CONTENT_TYPES.keys.include?(@content_type) ? AVAILABLE_CONTENT_TYPES[@content_type] : AVAILABLE_CONTENT_TYPES[DEFAULT_CONTENT_TYPE]
         output_format = @output_format && AVAILABLE_OUTPUT_FORMATS.keys.include?(@output_format) ? AVAILABLE_OUTPUT_FORMATS[@output_format] : AVAILABLE_OUTPUT_FORMATS[DEFAULT_OUTPUT_FORMAT]

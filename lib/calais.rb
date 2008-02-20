@@ -36,10 +36,13 @@ module Calais
   
   class << self
     def enlighten(*args, &block) Client.new(*args, &block).call(:enlighten) end
+
     def process_document(*args, &block) 
       data, error = Calais.enlighten(*args, &block)
-      Client.process_data(data, error)
+      process_data(data, error)
     end
+
+    def process_data(data, error=nil) Response.new(data, error) end
   end
 end
 
