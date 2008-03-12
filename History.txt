@@ -1,5 +1,6 @@
 == UNRELEASED
 * fixed error where classes weren't being required in the proper order on Ubuntu (reported by Jon Moses)
+* New things coming back from the API. Fixing in tests.
 
 == 0.0.4
 
