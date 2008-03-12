@@ -9,7 +9,12 @@ require 'xml/libxml'
 $KCODE = "UTF8"
 require 'jcode'
 
-Dir.glob(File.join(File.dirname(__FILE__), 'calais/*.rb')).each { |f| require f }
+$:.unshift File.expand_path(File.dirname(__FILE__)) + '/calais'
+
+require 'name'
+require 'relationship'
+require 'response'
+require 'client'
 
 module Calais
   POST_URL = "http://api.opencalais.com"
