@@ -20,7 +20,8 @@ module Calais
   POST_URL = "http://api.opencalais.com"
   
   AVAILABLE_OUTPUT_FORMATS = {
-    :rdf => "XML/RDF"
+    :rdf => "XML/RDF",
+    :simple => "Text/Simple"
   }
   DEFAULT_OUTPUT_FORMAT = :rdf
   
