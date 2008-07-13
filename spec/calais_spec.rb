@@ -52,7 +52,7 @@ describe Calais, ".process_document" do
   it "returns relationships" do
     @response.relationships.should_not be_nil
     @response.relationships.should_not be_empty
-    @response.relationships.map {|r| r.type }.should == ["Quotation", "Quotation", "Quotation", "PersonProfessional", "Quotation", "Quotation"]
+    @response.relationships.map {|r| r.type }.should == ["Quotation", "Quotation", "Quotation", "Quotation", "Quotation", "PersonProfessional"]
   end
 
 end
