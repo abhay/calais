@@ -30,12 +30,15 @@ module Calais
       def parse_names
         @names = @libxml.root.find("rdf:Description/rdf:type[contains(@rdf:resource, '/em/e/')]/..").map do |n|
           name = n.find_first("c:name").content
-          type = n.find_first("rdf:type").properties.to_a.assoc("resource").last.split('/').last
-          hash = n.properties.to_a.assoc("about").last.split("/").last
+          type = n.find_first("rdf:type").properties["resource"].split('/').last
+          hash = n.properties["about"].split("/").last
           
-          locations = @libxml.root.find("rdf:Description/c:subject[contains(@rdf:resource, '#{hash}')]/..").map do |n2|
-            start = n2.find_first("c:offset").content.to_i
-            Range.new(start, start+n2.find_first("c:length").content.to_i)
+		  locations = []
+          locations = @libxml.root.find("rdf:Description/c:subject[contains(@rdf:resource, '#{hash}')]/..").each do |n2|
+            if start = n2.find_first("c:offset")
+              start = start.content.to_i
+			  Range.new(start, start+n2.find_first("c:length").content.to_i)
+			end
           end
           
           Name.new(
@@ -49,15 +52,15 @@ module Calais
       
       def parse_relationships
         @libxml.root.find("rdf:Description/rdf:type[contains(@rdf:resource, '/em/r')]/..").each do |n|
-          hash = n.properties.to_a.assoc("about").last.split("/").last
-          type = n.find_first("rdf:type").properties.to_a.assoc("resource").last.split('/').last
+          hash = n.properties["about"].split("/").last
+          type = n.find_first("rdf:type").properties["resource"].split('/').last
           
           metadata = {}
           
           n.to_a.each do |n2|
             next if n2.name == "type" or n2.comment?
-            resource = n2.properties.to_a.assoc("resource")
-            metadata[n2.name] = resource ? Name.find_in_names(resource.last.split("/").last, @names) : n2.content.strip
+            resource = n2.properties["resource"]
+            metadata[n2.name] = resource ? Name.find_in_names(resource.split("/").last, @names) : n2.content.strip
           end
           
           locations = @libxml.root.find("rdf:Description/c:subject[contains(@rdf:resource, '#{hash}')]/..").map do |n2|
