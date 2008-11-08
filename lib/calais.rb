@@ -11,9 +11,6 @@ require 'jcode'
 
 $:.unshift File.expand_path(File.dirname(__FILE__)) + '/calais'
 
-require 'name'
-require 'relationship'
-require 'response'
 require 'client'
 
 module Calais
@@ -41,14 +38,7 @@ module Calais
   MAX_RETRIES = 5
   
   class << self
-    def enlighten(*args, &block) Client.new(*args, &block).call(:enlighten) end
-
-    def process_document(*args, &block) 
-      data, error = Calais.enlighten(*args, &block)
-      process_data(data, error)
-    end
-
-    def process_data(data, error=nil) Response.new(data, error) end
+    def enlighten(*args, &block); Client.new(*args, &block).call(:enlighten); end
   end
 end
 
