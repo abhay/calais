@@ -18,7 +18,6 @@ module Calais
     def initialize(options={}, &block)
       options.each {|k,v| send("#{k}=", v)}
       yield(self) if block_given?
-      
     end
     
     def enlighten
@@ -28,10 +27,13 @@ module Calais
         "paramsXML" => params_xml
       }
       
-      url = @use_beta ? URI.parse(BETA_REST_ENDPOINT) : URI.parse(REST_ENDPOINT)
-      resp, data = Net::HTTP.post_form(url, post_args)
+      @client ||= Curl::Easy.new
+      @client.url = @use_beta ? BETA_REST_ENDPOINT : REST_ENDPOINT
+      @client.timeout = HTTP_TIMEOUT
       
-      return resp.is_a?(Net::HTTPOK) ? data : [data, "API Error: #{resp}"]
+      post_fields = post_args.map {|k,v| Curl::PostField.content(k, v) }
+      
+      do_request(post_fields)
     end
     
     def params_xml
@@ -95,6 +97,13 @@ module Calais
         unknown_discards = Set.new(@metadata_discards) - KNOWN_DISCARDS
         raise "unknown metadata discards: #{unknown_discards.to_ainspect}" unless unknown_discards.empty?
       end
-    
+      
+      def do_request(post_fields)
+        unless @client.http_post(post_fields)
+          raise 'unable to post to api endpoint'
+        end
+
+        @client.body_str
+      end
   end
 end

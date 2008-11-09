@@ -20,6 +20,7 @@ This is the easiest way to get the RDF-formated response from the OpenCalais ser
 * Ruby 1.8.5 or better
   * Uses the following standard libraries: digest/sha1, net/http, yaml, cgi
 * libxml2 / libxml-ruby
+* curb, libcurl
 
 == Install
 

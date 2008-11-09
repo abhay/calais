@@ -1,0 +1,483 @@
+{
+   "doc":{
+      "info":{
+         "document":"<document>\n<id>57831<\/id>\n<title>Record number of bicycles sold in Australia in 2006<\/title>\n<date>January 4, 2007<\/date>\n<body>\nBicycle sales in Australia have recorded record sales of 1,273,781 units for 2006, exceeding car sales by 32 percent. It is the fifth year in a row that the bicycle industry has sold more than one million units, a figure yet to be realised by car manufacturers.\n\nThe Cycling Promotion Fund (CPF) spokesman Ian Christie said Australians were increasingly using bicycles as an alternative to cars. Sales rose nine percent in 2006 while the car market stalled. Mr Christie said people were looking to cut their fuel costs and improve their fitness.\n\nMr Christie, a native of Hobart, Tasmania said organisations were beginning to supply bicycles as a company vehicle. \"There is an emerging trend towards people using bikes as their official company-supplied vehicle in place of the traditional company car,\" he said.\n\n\"Some of Australia's biggest corporations now have bicycle fleets, and when you add in government organisations, we now know of at least 50 organisations which operate fleets of bikes.\"\n\n\"Although the company bicycle is a long way from taking over from the company car, it's an important trend when you consider that nearly half of all cars sold are to company fleets.\"\n\nThe CPF claims most commutes to work are less than 5 kilometres (3 miles) making bicycle travel a viable alternative.\n\n<\/body><\/document>",
+         "docTitle":"Record number of bicycles sold in Australia in 2006",
+         "docDate":"2007-01-04 00:00:00",
+         "allowDistribution":"true",
+         "allowSearch":"true",
+         "calaisRequestID":"35ef0a3c-43bc-4fe4-afb3-df3ef68583f1",
+         "id":"http://id.opencalais.com/FYP3OZuxbUDyQEO42uKnqw"
+      },
+      "meta":{
+         "submitterCode":"4a388fbc-9897-def9-9233-efddbfbca363",
+         "signature":"digestalg-1|SFRSBjMAPoJABwWIno9iz+W538c=|YJiy7rmNSET86b1nvSAtZt10VCZj+eeLlGp+vTPkfslM3BcXhy+lDA==",
+         "contentType":"text/xml",
+         "emVer":"UnifiedIM-DJ",
+         "langIdVer":"DefaultLangId",
+         "language":"English",
+         "processingVer":"CalaisJob01",
+         "submissionDate":"2008-11-09 00:16:35.096",
+         "messages":[
+         ]
+      }
+   },
+   "http://d.opencalais.com/dochash-1/9359fafb-1158-3343-91e3-7f4ed89f3b01/cat/1":{
+      "_typeGroup":"topics",
+      "category":"http://d.opencalais.com/cat/Calais/BusinessFinance",
+      "classifierName":"Calais",
+      "categoryName":"Business_Finance",
+      "score":1
+   },
+   "http://d.opencalais.com/dochash-1/9359fafb-1158-3343-91e3-7f4ed89f3b01/cat/2":{
+      "_typeGroup":"topics",
+      "category":"http://d.opencalais.com/cat/Calais/TechnologyInternet",
+      "classifierName":"Calais",
+      "categoryName":"Technology_Internet",
+      "score":1
+   },
+   "http://d.opencalais.com/genericHasher-1/84a34c48-25ac-327f-a805-7b81fd570f7d":{
+      "_type":"Country",
+      "_typeGroup":"entities",
+      "name":"Australia",
+      "instances":[
+         {
+            "detection":"[number of bicycles sold in ]Australia[ in 2006<\/title>\n<date>January 4,]",
+            "prefix":"number of bicycles sold in",
+            "exact":"Australia",
+            "suffix":"in 2006<\/title>\n<date>January 4,",
+            "offset":67,
+            "length":9
+         },
+         {
+            "detection":"[4, 2007<\/date>\n<body>\nBicycle sales in ]Australia[ have recorded record sales of 1,273,781 units]",
+            "prefix":"4, 2007<\/date>\n<body>\nBicycle sales in",
+            "exact":"Australia",
+            "suffix":"have recorded record sales of 1,273,781 units",
+            "offset":146,
+            "length":9
+         },
+         {
+            "detection":"[ the traditional company car,\" he said.\n\n\"Some of ]Australia['s biggest corporations now have bicycle fleets,]",
+            "prefix":"the traditional company car,\" he said.\n\n\"Some of",
+            "exact":"Australia",
+            "suffix":"'s biggest corporations now have bicycle fleets,",
+            "offset":952,
+            "length":9
+         }
+      ],
+      "relevance":0.725,
+      "resolutions":[
+         {
+            "name":"Australia",
+            "latitude":"-32.345623",
+            "longitude":"141.4346"
+         }
+      ]
+   },
+   "http://d.opencalais.com/genericHasher-1/8f3936d9-cf6b-37fc-ae0d-a145959ae3b5":{
+      "_type":"GenericRelations",
+      "_typeGroup":"relations",
+      "verb":"say",
+      "relationsubject":"http://d.opencalais.com/pershash-1/3bcf2655-ff2a-3a80-8de4-558b9626ad21",
+      "relationobject":"Australians were increasingly using bicycles as an alternative to cars",
+      "instances":[
+         {
+            "detection":"[ manufacturers.\n\nThe Cycling Promotion Fund (CPF) ]spokesman Ian Christie said Australians were increasingly using bicycles as an alternative to cars.[ Sales rose nine percent in 2006 while the car]",
+            "prefix":"manufacturers.\n\nThe Cycling Promotion Fund (CPF)",
+            "exact":"spokesman Ian Christie said Australians were increasingly using bicycles as an alternative to cars.",
+            "suffix":"Sales rose nine percent in 2006 while the car",
+            "offset":425,
+            "length":99
+         }
+      ]
+   },
+   "http://d.opencalais.com/genericHasher-1/9853f11e-5efa-3efc-90b9-0d0450f7d673":{
+      "_type":"Organization",
+      "_typeGroup":"entities",
+      "name":"Cycling Promotion Fund",
+      "organizationtype":"N/A",
+      "nationality":"N/A",
+      "instances":[
+         {
+            "detection":"[yet to be realised by car manufacturers.\n\nThe ]Cycling Promotion Fund[ (CPF) spokesman Ian Christie said Australians]",
+            "prefix":"yet to be realised by car manufacturers.\n\nThe",
+            "exact":"Cycling Promotion Fund",
+            "suffix":"(CPF) spokesman Ian Christie said Australians",
+            "offset":396,
+            "length":22
+         },
+         {
+            "detection":"[car manufacturers.\n\nThe Cycling Promotion Fund (]CPF[) spokesman Ian Christie said Australians were]",
+            "prefix":"car manufacturers.\n\nThe Cycling Promotion Fund (",
+            "exact":"CPF",
+            "suffix":") spokesman Ian Christie said Australians were",
+            "offset":420,
+            "length":3
+         },
+         {
+            "detection":"[of all cars sold are to company fleets.\"\n\nThe ]CPF[ claims most commutes to work are less than 5]",
+            "prefix":"of all cars sold are to company fleets.\"\n\nThe",
+            "exact":"CPF",
+            "suffix":"claims most commutes to work are less than 5",
+            "offset":1318,
+            "length":3
+         }
+      ],
+      "relevance":0.396,
+      "resolutions":[
+      ]
+   },
+   "http://d.opencalais.com/genericHasher-1/9fa3fb8a-f517-32c7-8a46-3c1506ea3a70":{
+      "_type":"City",
+      "_typeGroup":"entities",
+      "name":"Hobart",
+      "instances":[
+         {
+            "detection":"[ improve their fitness.\n\nMr Christie, a native of ]Hobart[, Tasmania said organisations were beginning to]",
+            "prefix":"improve their fitness.\n\nMr Christie, a native of",
+            "exact":"Hobart",
+            "suffix":", Tasmania said organisations were beginning to",
+            "offset":701,
+            "length":6
+         }
+      ],
+      "relevance":0.156,
+      "resolutions":[
+         {
+            "name":"Hobart,Tasmania,Australia",
+            "latitude":"-42.8806",
+            "longitude":"147.325"
+         }
+      ]
+   },
+   "http://d.opencalais.com/genericHasher-1/b8bfc0f2-35cf-3eae-a98e-ae6d0abf5217":{
+      "_type":"Quotation",
+      "_typeGroup":"relations",
+      "person":"http://d.opencalais.com/pershash-1/3bcf2655-ff2a-3a80-8de4-558b9626ad21",
+      "quote":"organisations were beginning to supply bicycles as a company vehicle",
+      "instances":[
+         {
+            "detection":"[ cut their fuel costs and improve their fitness.\n\n]Mr Christie, a native of Hobart, Tasmania said organisations were beginning to supply bicycles as a company vehicle.[ \"There is an emerging trend towards people using]",
+            "prefix":"cut their fuel costs and improve their fitness.\n\n",
+            "exact":"Mr Christie, a native of Hobart, Tasmania said organisations were beginning to supply bicycles as a company vehicle.",
+            "suffix":"\"There is an emerging trend towards people using",
+            "offset":676,
+            "length":116
+         }
+      ]
+   },
+   "http://d.opencalais.com/genericHasher-1/acc62eba-98d2-3481-9e2c-fb775f7e01f3":{
+      "_type":"GenericRelations",
+      "_typeGroup":"relations",
+      "verb":"say",
+      "relationsubject":"http://d.opencalais.com/genericHasher-1/d0ca04b6-9cf5-3595-ad4b-7758a0b57997",
+      "relationobject":"organisations were beginning to supply bicycles as a company vehicle",
+      "instances":[
+         {
+            "detection":"[ their fitness.\n\nMr Christie, a native of Hobart, ]Tasmania said organisations were beginning to supply bicycles as a company vehicle.[ \"There is an emerging trend towards people using]",
+            "prefix":"their fitness.\n\nMr Christie, a native of Hobart,",
+            "exact":"Tasmania said organisations were beginning to supply bicycles as a company vehicle.",
+            "suffix":"\"There is an emerging trend towards people using",
+            "offset":709,
+            "length":83
+         }
+      ]
+   },
+   "http://d.opencalais.com/genericHasher-1/a882c699-1fac-3e5f-a688-9afb43760fa4":{
+      "_type":"PersonAttributes",
+      "_typeGroup":"relations",
+      "person":"http://d.opencalais.com/pershash-1/3bcf2655-ff2a-3a80-8de4-558b9626ad21",
+      "birthplace":"Hobart,Tasmania",
+      "gender":"M",
+      "instances":[
+         {
+            "detection":"[ cut their fuel costs and improve their fitness.\n\n]Mr Christie, a native of Hobart, Tasmania[ said organisations were beginning to supply]",
+            "prefix":"cut their fuel costs and improve their fitness.\n\n",
+            "exact":"Mr Christie, a native of Hobart, Tasmania",
+            "suffix":"said organisations were beginning to supply",
+            "offset":676,
+            "length":41
+         }
+      ]
+   },
+   "http://d.opencalais.com/genericHasher-1/ed0e83f9-87e8-3da6-ab46-cd6be116357c":{
+      "_type":"IndustryTerm",
+      "_typeGroup":"entities",
+      "name":"car manufacturers",
+      "instances":[
+         {
+            "detection":"[million units, a figure yet to be realised by ]car manufacturers[.\n\nThe Cycling Promotion Fund (CPF) spokesman Ian]",
+            "prefix":"million units, a figure yet to be realised by",
+            "exact":"car manufacturers",
+            "suffix":".\n\nThe Cycling Promotion Fund (CPF) spokesman Ian",
+            "offset":372,
+            "length":17
+         }
+      ],
+      "relevance":0.291,
+      "resolutions":[
+      ]
+   },
+   "http://d.opencalais.com/genericHasher-1/70d3c1da-ce5c-306c-be9d-9a8a1c8c6e21":{
+      "_type":"Quotation",
+      "_typeGroup":"relations",
+      "person":"http://d.opencalais.com/pershash-1/3bcf2655-ff2a-3a80-8de4-558b9626ad21",
+      "quote":"Although the company bicycle is a long way from taking over from the company car, it's an important trend when you consider that nearly half of all cars sold are to company fleets.",
+      "instances":[
+         {
+            "detection":"[organisations which operate fleets of bikes.\"\n\n]\"Although the company bicycle is a long way from taking over from the company car, it's an important trend when you consider that nearly half of all cars sold are to company fleets.\"[\n\nThe CPF claims most commutes to work are less]",
+            "prefix":"organisations which operate fleets of bikes.\"\n\n",
+            "exact":"\"Although the company bicycle is a long way from taking over from the company car, it's an important trend when you consider that nearly half of all cars sold are to company fleets.\"",
+            "suffix":"\n\nThe CPF claims most commutes to work are less",
+            "offset":1130,
+            "length":182
+         }
+      ]
+   },
+   "http://d.opencalais.com/genericHasher-1/e05f3d33-1622-3172-836c-b48637a156d3":{
+      "_type":"Continent",
+      "_typeGroup":"entities",
+      "name":"Australia",
+      "instances":[
+         {
+            "detection":"[number of bicycles sold in ]Australia[ in 2006<\/title>\n<date>January 4,]",
+            "prefix":"number of bicycles sold in",
+            "exact":"Australia",
+            "suffix":"in 2006<\/title>\n<date>January 4,",
+            "offset":67,
+            "length":9
+         }
+      ],
+      "relevance":0.316,
+      "resolutions":[
+      ]
+   },
+   "http://d.opencalais.com/genericHasher-1/d0ca04b6-9cf5-3595-ad4b-7758a0b57997":{
+      "_type":"ProvinceOrState",
+      "_typeGroup":"entities",
+      "name":"Tasmania",
+      "instances":[
+         {
+            "detection":"[ their fitness.\n\nMr Christie, a native of Hobart, ]Tasmania[ said organisations were beginning to supply]",
+            "prefix":"their fitness.\n\nMr Christie, a native of Hobart,",
+            "exact":"Tasmania",
+            "suffix":"said organisations were beginning to supply",
+            "offset":709,
+            "length":8
+         }
+      ],
+      "relevance":0.156,
+      "resolutions":[
+         {
+            "name":"Tasmania,Australia",
+            "latitude":"-42.0",
+            "longitude":"147.0"
+         }
+      ]
+   },
+   "http://d.opencalais.com/genericHasher-1/0bb9cdb4-3cb7-342a-9901-6d1f12b32f6a":{
+      "_type":"IndustryTerm",
+      "_typeGroup":"entities",
+      "name":"car sales",
+      "instances":[
+         {
+            "detection":"[sales of 1,273,781 units for 2006, exceeding ]car sales[ by 32 percent. It is the fifth year in a row]",
+            "prefix":"sales of 1,273,781 units for 2006, exceeding",
+            "exact":"car sales",
+            "suffix":"by 32 percent. It is the fifth year in a row",
+            "offset":222,
+            "length":9
+         }
+      ],
+      "relevance":0.31,
+      "resolutions":[
+      ]
+   },
+   "http://d.opencalais.com/genericHasher-1/3979e581-0823-3e84-9257-1ca36db4665e":{
+      "_type":"IndustryTerm",
+      "_typeGroup":"entities",
+      "name":"car market",
+      "instances":[
+         {
+            "detection":"[cars. Sales rose nine percent in 2006 while the ]car market[ stalled. Mr Christie said people were looking to]",
+            "prefix":"cars. Sales rose nine percent in 2006 while the",
+            "exact":"car market",
+            "suffix":"stalled. Mr Christie said people were looking to",
+            "offset":567,
+            "length":10
+         }
+      ],
+      "relevance":0.228,
+      "resolutions":[
+      ]
+   },
+   "http://d.opencalais.com/genericHasher-1/0c3d5340-106f-390e-92d3-a4aa18004fb8":{
+      "_type":"IndustryTerm",
+      "_typeGroup":"entities",
+      "name":"company car",
+      "instances":[
+         {
+            "detection":"[company-supplied vehicle in place of the ]traditional company car[,\" he said.\n\n\"Some of Australia's biggest]",
+            "prefix":"company-supplied vehicle in place of the",
+            "exact":"traditional company car",
+            "suffix":",\" he said.\n\n\"Some of Australia's biggest",
+            "offset":907,
+            "length":23
+         },
+         {
+            "detection":"[bicycle is a long way from taking over from the ]company car[, it's an important trend when you consider that]",
+            "prefix":"bicycle is a long way from taking over from the",
+            "exact":"company car",
+            "suffix":", it's an important trend when you consider that",
+            "offset":1200,
+            "length":11
+         }
+      ],
+      "relevance":0.158,
+      "resolutions":[
+      ]
+   },
+   "http://d.opencalais.com/pershash-1/3bcf2655-ff2a-3a80-8de4-558b9626ad21":{
+      "_type":"Person",
+      "_typeGroup":"entities",
+      "name":"Ian Christie",
+      "persontype":"political",
+      "nationality":"N/A",
+      "instances":[
+         {
+            "detection":"[Cycling Promotion Fund (CPF) spokesman ]Ian Christie[ said Australians were increasingly using]",
+            "prefix":"Cycling Promotion Fund (CPF) spokesman",
+            "exact":"Ian Christie",
+            "suffix":"said Australians were increasingly using",
+            "offset":435,
+            "length":12
+         },
+         {
+            "detection":"[percent in 2006 while the car market stalled. ]Mr Christie[ said people were looking to cut their fuel costs]",
+            "prefix":"percent in 2006 while the car market stalled.",
+            "exact":"Mr Christie",
+            "suffix":"said people were looking to cut their fuel costs",
+            "offset":587,
+            "length":11
+         },
+         {
+            "detection":"[ cut their fuel costs and improve their fitness.\n\n]Mr Christie[, a native of Hobart, Tasmania said organisations]",
+            "prefix":"cut their fuel costs and improve their fitness.\n\n",
+            "exact":"Mr Christie",
+            "suffix":", a native of Hobart, Tasmania said organisations",
+            "offset":676,
+            "length":11
+         },
+         {
+            "detection":"[in place of the traditional company car,\" ]he[ said.\n\n\"Some of Australia's biggest corporations]",
+            "prefix":"in place of the traditional company car,\"",
+            "exact":"he",
+            "suffix":"said.\n\n\"Some of Australia's biggest corporations",
+            "offset":933,
+            "length":2
+         }
+      ],
+      "relevance":0.644,
+      "resolutions":[
+      ]
+   },
+   "http://d.opencalais.com/genericHasher-1/1c2b9a9a-4991-305c-aefe-c724314a7042":{
+      "_type":"Quotation",
+      "_typeGroup":"relations",
+      "person":"http://d.opencalais.com/pershash-1/3bcf2655-ff2a-3a80-8de4-558b9626ad21",
+      "quote":"There is an emerging trend towards people using bikes as their official company-supplied vehicle in place of the traditional company car; Some of Australia's biggest corporations now have bicycle fleets, and when you add in government organisations, we now know of at least 50 organisations which operate fleets of bikes.",
+      "instances":[
+         {
+            "detection":"[to supply bicycles as a company vehicle. ]\"There is an emerging trend towards people using bikes as their official company-supplied vehicle in place of the traditional company car,\" he said.\n\n\"Some of Australia's biggest corporations now have bicycle fleets, and when you add in government organisations, we now know of at least 50 organisations which operate fleets of bikes.\"[\n\n\"Although the company bicycle is a long way]",
+            "prefix":"to supply bicycles as a company vehicle.",
+            "exact":"\"There is an emerging trend towards people using bikes as their official company-supplied vehicle in place of the traditional company car,\" he said.\n\n\"Some of Australia's biggest corporations now have bicycle fleets, and when you add in government organisations, we now know of at least 50 organisations which operate fleets of bikes.\"",
+            "suffix":"\n\n\"Although the company bicycle is a long way",
+            "offset":793,
+            "length":335
+         }
+      ]
+   },
+   "http://d.opencalais.com/genericHasher-1/21431161-7b9f-34c0-9417-9f9b72ed8a70":{
+      "_type":"GenericRelations",
+      "_typeGroup":"relations",
+      "verb":"say",
+      "relationsubject":"http://d.opencalais.com/pershash-1/3bcf2655-ff2a-3a80-8de4-558b9626ad21",
+      "relationobject":"people were looking to cut their fuel costs and improve their fitness",
+      "instances":[
+         {
+            "detection":"[percent in 2006 while the car market stalled. ]Mr Christie said people were looking to cut their fuel costs and improve their fitness.[\n\nMr Christie, a native of Hobart, Tasmania said]",
+            "prefix":"percent in 2006 while the car market stalled.",
+            "exact":"Mr Christie said people were looking to cut their fuel costs and improve their fitness.",
+            "suffix":"\n\nMr Christie, a native of Hobart, Tasmania said",
+            "offset":587,
+            "length":87
+         }
+      ]
+   },
+   "http://d.opencalais.com/genericHasher-1/7f030b9c-a799-35ce-9eb8-554fcb0b2daf":{
+      "_type":"Quotation",
+      "_typeGroup":"relations",
+      "person":"http://d.opencalais.com/pershash-1/3bcf2655-ff2a-3a80-8de4-558b9626ad21",
+      "quote":"people were looking to cut their fuel costs and improve their fitness",
+      "instances":[
+         {
+            "detection":"[percent in 2006 while the car market stalled. ]Mr Christie said people were looking to cut their fuel costs and improve their fitness.[\n\nMr Christie, a native of Hobart, Tasmania said]",
+            "prefix":"percent in 2006 while the car market stalled.",
+            "exact":"Mr Christie said people were looking to cut their fuel costs and improve their fitness.",
+            "suffix":"\n\nMr Christie, a native of Hobart, Tasmania said",
+            "offset":587,
+            "length":87
+         }
+      ]
+   },
+   "http://d.opencalais.com/genericHasher-1/03ebb542-58cd-346f-8cf5-c69cfef1d446":{
+      "_type":"GenericRelations",
+      "_typeGroup":"relations",
+      "verb":"stall",
+      "relationsubject":"http://d.opencalais.com/genericHasher-1/3979e581-0823-3e84-9257-1ca36db4665e",
+      "instances":[
+         {
+            "detection":"[to cars. Sales rose nine percent in 2006 while ]the car market stalled[. Mr Christie said people were looking to cut]",
+            "prefix":"to cars. Sales rose nine percent in 2006 while",
+            "exact":"the car market stalled",
+            "suffix":". Mr Christie said people were looking to cut",
+            "offset":563,
+            "length":22
+         }
+      ]
+   },
+   "http://d.opencalais.com/genericHasher-1/39d936c6-79f0-3bcd-9a05-2b36797dc183":{
+      "_type":"Quotation",
+      "_typeGroup":"relations",
+      "person":"http://d.opencalais.com/pershash-1/3bcf2655-ff2a-3a80-8de4-558b9626ad21",
+      "quote":"Australians were increasingly using bicycles as an alternative to cars",
+      "instances":[
+         {
+            "detection":"[ figure yet to be realised by car manufacturers.\n\n]The Cycling Promotion Fund (CPF) spokesman Ian Christie said Australians were increasingly using bicycles as an alternative to cars.[ Sales rose nine percent in 2006 while the car]",
+            "prefix":"figure yet to be realised by car manufacturers.\n\n",
+            "exact":"The Cycling Promotion Fund (CPF) spokesman Ian Christie said Australians were increasingly using bicycles as an alternative to cars.",
+            "suffix":"Sales rose nine percent in 2006 while the car",
+            "offset":392,
+            "length":132
+         }
+      ]
+   },
+   "http://d.opencalais.com/genericHasher-1/cac873f3-52ff-3a09-a8d0-001acb655270":{
+      "_type":"PersonProfessional",
+      "_typeGroup":"relations",
+      "person":"http://d.opencalais.com/pershash-1/3bcf2655-ff2a-3a80-8de4-558b9626ad21",
+      "position":"spokesman",
+      "organization":"http://d.opencalais.com/genericHasher-1/9853f11e-5efa-3efc-90b9-0d0450f7d673",
+      "instances":[
+         {
+            "detection":"[yet to be realised by car manufacturers.\n\nThe ]Cycling Promotion Fund (CPF) spokesman Ian Christie[ said Australians were increasingly using]",
+            "prefix":"yet to be realised by car manufacturers.\n\nThe",
+            "exact":"Cycling Promotion Fund (CPF) spokesman Ian Christie",
+            "suffix":"said Australians were increasingly using",
+            "offset":396,
+            "length":51
+         }
+      ]
+   }
+}

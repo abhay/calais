@@ -61,19 +61,19 @@ describe Calais::Client, :enlighten do
       c.allow_distribution = true
       c.allow_search = true
     end
-    
-    Net::HTTP.allocate
   end
   
   it 'provides access to the enlighten command on the generic rest endpoint' do
-    Net::HTTP.should_receive(:post_form).with(URI.parse(Calais::REST_ENDPOINT), anything)
+    @client.should_receive(:do_request).with(anything).and_return(SAMPLE_RESPONSE)
     @client.enlighten
+    @client.instance_variable_get(:@client).url.should == Calais::REST_ENDPOINT
   end
   
   it 'provides access to the enlighten command on the beta rest endpoint' do
     @client.use_beta = true
     
-    Net::HTTP.should_receive(:post_form).with(URI.parse(Calais::BETA_REST_ENDPOINT), anything)
+    @client.should_receive(:do_request).with(anything).and_return(SAMPLE_RESPONSE)
     @client.enlighten
+    @client.instance_variable_get(:@client).url.should == Calais::BETA_REST_ENDPOINT
   end
 end

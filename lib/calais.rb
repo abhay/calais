@@ -6,6 +6,7 @@ require 'set'
 
 require 'rubygems'
 require 'xml/libxml'
+require 'curb'
 
 $KCODE = "UTF8"
 require 'jcode'
@@ -36,6 +37,7 @@ module Calais
   KNOWN_DISCARDS = ['er/Company', 'er/Geo']
   
   MAX_RETRIES = 5
+  HTTP_TIMEOUT = 60
   MIN_CONTENT_SIZE = 100
   MAX_CONTENT_SIZE = 100_000
   
