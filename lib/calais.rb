@@ -2,6 +2,7 @@ require 'digest/sha1'
 require 'net/http'
 require 'cgi'
 require 'iconv'
+require 'set'
 
 require 'rubygems'
 require 'xml/libxml'
@@ -14,31 +15,32 @@ $:.unshift File.expand_path(File.dirname(__FILE__)) + '/calais'
 require 'client'
 
 module Calais
-  POST_URL = "http://api.opencalais.com"
-  
-  AVAILABLE_OUTPUT_FORMATS = {
-    :rdf => "XML/RDF",
-    :simple => "Text/Simple"
-  }
-  DEFAULT_OUTPUT_FORMAT = :rdf
+  REST_ENDPOINT = "http://api.opencalais.com/enlighten/rest/"
+  BETA_REST_ENDPOINT = "http://beta.opencalais.com/enlighten/rest/"
   
   AVAILABLE_CONTENT_TYPES = {
-    :xml => "TEXT/XML",
-    :html => "TEXT/HTML",
-    :text => "TEXT/TXT"
+    :xml => 'text/xml',
+    :text => 'text/txt',
+    :html => 'text/html',
+    :raw => 'text/raw'
   }
-  DEFAULT_CONTENT_TYPE = :xml
   
-  DEFAULT_SUBMITTER = "calais.rb"
-  
-  AVAILABLE_METHODS = {
-    :enlighten => "/enlighten/calais.asmx/Enlighten"
+  AVAILABLE_OUTPUT_FORMATS = {
+    :rdf => 'xml/rdf',
+    :simple => 'text/simple',
+    :microformats => 'text/microformats',
+    :json => 'application/json'
   }
+  
+  KNOWN_ENABLES = ['GenericRelations']
+  KNOWN_DISCARDS = ['er/Company', 'er/Geo']
   
   MAX_RETRIES = 5
+  MIN_CONTENT_SIZE = 100
+  MAX_CONTENT_SIZE = 100_000
   
   class << self
-    def enlighten(*args, &block); Client.new(*args, &block).call(:enlighten); end
+    def enlighten(*args, &block); Client.new(*args, &block).enlighten; end
   end
 end
 
