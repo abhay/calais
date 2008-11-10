@@ -6,6 +6,7 @@ require 'set'
 
 require 'rubygems'
 require 'xml/libxml'
+require 'json'
 require 'curb'
 
 $KCODE = "UTF8"
@@ -14,6 +15,7 @@ require 'jcode'
 $:.unshift File.expand_path(File.dirname(__FILE__)) + '/calais'
 
 require 'client'
+require 'response'
 
 module Calais
   REST_ENDPOINT = "http://api.opencalais.com/enlighten/rest/"
@@ -43,6 +45,12 @@ module Calais
   
   class << self
     def enlighten(*args, &block); Client.new(*args, &block).enlighten; end
+    
+    def process_document(*args, &block)
+      client = Client.new(*args, &block)
+      client.output_format = :rdf
+      Response.new(client.enlighten)
+    end
   end
 end
 
