@@ -6,12 +6,9 @@ Rakefile
 init.rb
 lib/calais.rb
 lib/calais/client.rb
-lib/calais/name.rb
-lib/calais/relationship.rb
 lib/calais/response.rb
 spec/calais_spec.rb
 spec/fixtures/.gitignore
-spec/fixtures/bicycles_austrailia.xml
 spec/fixtures/calais.yml.sample
 spec/fixtures/slovenia_euro.xml
 spec/helper.rb
