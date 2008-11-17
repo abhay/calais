@@ -34,11 +34,11 @@ module Calais
     end
 
     class Entity
-      attr_accessor :hash, :type, :attributes, :relevance
+      attr_accessor :hash, :type, :attributes, :relevance, :instances
     end
 
     class Relation
-      attr_accessor :hash, :type, :attributes
+      attr_accessor :hash, :type, :attributes, :instances
     end
 
     class Geography
@@ -47,6 +47,22 @@ module Calais
 
     class Category
       attr_accessor :name, :score
+    end
+
+    class Instance
+      attr_accessor :prefix, :exact, :suffix, :offset, :length
+
+      # Makes a new Instance object from an appropriate LibXML::XML::Node.
+      def self.from_node(node)
+        instance = self.new
+        instance.prefix = node.find_first("c:prefix").content
+        instance.exact = node.find_first("c:exact").content
+        instance.suffix = node.find_first("c:suffix").content
+        instance.offset = node.find_first("c:offset").content.to_i
+        instance.length = node.find_first("c:length").content.to_i
+
+        instance
+      end
     end
 
     class CalaisHash
@@ -145,6 +161,12 @@ module Calais
           relevance = @relevances[extracted_hash]
           entity.relevance = relevance if relevance
 
+          instance_nodes = @nodes[:instances].select {|n|
+            n.find_first("c:subject")[:resource].split("/")[-1] == extracted_hash
+          }
+
+          entity.instances = instance_nodes.map {|n| Instance.from_node(n) }
+
           entity
         end
       end
@@ -157,6 +179,12 @@ module Calais
           relation.hash = CalaisHash.find_or_create(extracted_hash, @hashes)
           relation.type = node.find("*[name()='rdf:type']")[0]['resource'].split('/')[-1] rescue nil
           relation.attributes = extract_attributes(node.find("*[contains(name(), 'c:')]"))
+
+          instance_nodes = @nodes[:instances].select {|n|
+            n.find_first("c:subject")[:resource].split("/")[-1] == extracted_hash
+          }
+
+          relation.instances = instance_nodes.map {|n| Instance.from_node(n) }
 
           relation
         end

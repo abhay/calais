@@ -59,4 +59,61 @@ describe Calais::Response, :new do
     @response.categories.map {|c| c.score }.should == [1.0, 1.0]
   end
 
+  it 'should find instances for each entity' do
+    @response.entities.each {|e|
+      e.instances.size.should > 0
+    }
+  end
+
+
+  it 'should find instances for each relation' do
+    @response.relations.each {|r|
+      r.instances.size.should > 0
+    }
+  end
+
+  it 'should find the correct instances for each entity' do
+    ## This currently tests only for the "Australia" entity's
+    ## instances.  A more thorough test that tests for the instances
+    ## of each of the many entities in the sample doc is desirable in
+    ## the future.
+
+    australia = @response.entities.select {|e| e.attributes["name"] == "Australia" }.first
+    australia.instances.size.should == 3
+    instances = australia.instances.sort{|a,b| a.offset <=> b.offset }
+
+    instances[0].prefix.should == "number of bicycles sold in "
+    instances[0].exact.should == "Australia"
+    instances[0].suffix.should == " in 2006<\/title>\n<date>January 4,"
+    instances[0].offset.should == 67
+    instances[0].length.should == 9
+
+    instances[1].prefix.should == "4, 2007<\/date>\n<body>\nBicycle sales in "
+    instances[1].exact.should == "Australia"
+    instances[1].suffix.should == " have recorded record sales of 1,273,781 units"
+    instances[1].offset.should == 146
+    instances[1].length.should == 9
+
+    instances[2].prefix.should == " the traditional company car,\" he said.\n\n\"Some of "
+    instances[2].exact.should == "Australia"
+    instances[2].suffix.should == "'s biggest corporations now have bicycle fleets,"
+    instances[2].offset.should == 952
+    instances[2].length.should == 9
+  end
+
+  it 'should find the correct instances for each relation' do
+    ## This currently tests only for one relation's instances.  A more
+    ## thorough test that tests for the instances of each of the many other
+    ## relations in the sample doc is desirable in the future.
+
+    rel = @response.relations.select {|e| e.hash.value == "8f3936d9-cf6b-37fc-ae0d-a145959ae3b5" }.first
+    rel.instances.size.should == 1
+
+    rel.instances.first.prefix.should == " manufacturers.\n\nThe Cycling Promotion Fund (CPF) "
+    rel.instances.first.exact.should == "spokesman Ian Christie said Australians were increasingly using bicycles as an alternative to cars."
+    rel.instances.first.suffix.should == " Sales rose nine percent in 2006 while the car"
+    rel.instances.first.offset.should == 425
+    rel.instances.first.length.should == 99
+  end
+
 end
