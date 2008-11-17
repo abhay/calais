@@ -12,7 +12,7 @@ module Calais
       :relevances => 'type/sys/RelevanceInfo',
     }
 
-    attr_accessor :hashes, :entities, :relations, :geographies
+    attr_accessor :hashes, :entities, :relations, :geographies, :categories
 
     def initialize(rdf_string)
       @raw_response = rdf_string
@@ -21,7 +21,8 @@ module Calais
       @entities = []
       @relations = []
       @geographies = []
-      @relevances = {} # key = hash, val = relevance
+      @relevances = {} # key = String hash, val = Float relevance
+      @categories = []
 
       extract_data
 
@@ -29,6 +30,7 @@ module Calais
       process_entities
       process_relations
       process_geographies
+      process_categories
     end
 
     class Entity
@@ -41,6 +43,10 @@ module Calais
 
     class Geography
       attr_accessor :name, :hash, :attributes
+    end
+
+    class Category
+      attr_accessor :name, :score
     end
 
     class CalaisHash
@@ -115,6 +121,16 @@ module Calais
         end
 
         @relevances
+      end
+
+      def process_categories
+        @categories = @nodes[:doccat].map do |node|
+          category = Category.new
+          category.name = node.find_first("c:categoryName").content
+          category.score = node.find_first("c:score").content.to_f
+
+          category
+        end
       end
 
       def process_entities

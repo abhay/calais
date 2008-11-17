@@ -51,4 +51,12 @@ describe Calais::Response, :new do
     @response.entities.each {|e| correct_relevances[e.hash.value].should == e.relevance }
   end
 
+  it 'should find the correct document categories returned by OpenCalais' do
+    @response.categories.map {|c| c.name }.sort.should == %w[Business_Finance Technology_Internet]
+  end
+
+  it 'should find the correct document category scores returned by OpenCalais' do
+    @response.categories.map {|c| c.score }.should == [1.0, 1.0]
+  end
+
 end
