@@ -103,18 +103,11 @@ module Calais
 
           entity = Entity.new
           entity.hash = CalaisHash.find_or_create(extracted_hash, @hashes)
-          entity.type = node.find("*[name()='rdf:type']")[0]['resource'].split('/')[-1] rescue nil
+          entity.type = extract_type(node)
           entity.attributes = extract_attributes(node.find("*[contains(name(), 'c:')]"))
 
-          relevance = @relevances[extracted_hash]
-          entity.relevance = relevance if relevance
-
-          entity.instances = get_instance_nodes(doc, extracted_hash).map do |instance_node|
-            instance = Instance.from_node(instance_node)
-            instance_node.remove!
-
-            instance
-          end
+          entity.relevance = @relevances[extracted_hash]
+          entity.instances = extract_instances(doc, extracted_hash)
 
           node.remove!
           entity
@@ -125,15 +118,9 @@ module Calais
 
           relation = Relation.new
           relation.hash = CalaisHash.find_or_create(extracted_hash, @hashes)
-          relation.type = node.find("*[name()='rdf:type']")[0]['resource'].split('/')[-1] rescue nil
+          relation.type = extract_type(node)
           relation.attributes = extract_attributes(node.find("*[contains(name(), 'c:')]"))
-
-          relation.instances = get_instance_nodes(doc, extracted_hash).map do |instance_node|
-            instance = Instance.from_node(instance_node)
-            instance_node.remove!
-
-            instance
-          end
+          relation.instances = extract_instances(doc, extracted_hash)
 
           node.remove!
           relation
@@ -156,12 +143,23 @@ module Calais
         return
       end
 
-      def get_instance_nodes(doc, hash)
+      def extract_instances(doc, hash)
         doc.root.find("rdf:Description/rdf:type[contains(@rdf:resource, '#{MATCHERS[:instances]}')]/..").select do |instance_node|
           instance_node.find_first("c:subject")[:resource].split("/")[-1] == hash
+        end.map do |instance_node|
+          instance = Instance.from_node(instance_node)
+          instance_node.remove!
+
+          instance
         end
       end
 
+      def extract_type(node)
+        node.find("*[name()='rdf:type']")[0]['resource'].split('/')[-1]
+      rescue
+        nil
+      end
+      
       def extract_attributes(nodes)
         nodes.inject({}) do |hsh, node|
           value = if node['resource']
