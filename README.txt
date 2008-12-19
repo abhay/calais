@@ -38,3 +38,6 @@ You can install the Calais gem via Rubygems (gem install calais) or by building 
 Abhay Kumar
 http://opensynapse.net
 
+== Acknowledgements
+
+* Paul Legato (http://www.economaton.com/). Help all around with the new response processor and implementation of the latest API.
