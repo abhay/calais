@@ -76,24 +76,24 @@ module Calais
     private
       def extract_data
         doc = XML::Parser.string(@raw_response).parse
-        
+
         doc.root.find("rdf:Description/rdf:type[contains(@rdf:resource, '#{MATCHERS[:docinfo]}')]/..").each { |node| node.remove! }
         doc.root.find("rdf:Description/rdf:type[contains(@rdf:resource, '#{MATCHERS[:docinfometa]}')]/..").each { |node| node.remove! }
         doc.root.find("rdf:Description/rdf:type[contains(@rdf:resource, '#{MATCHERS[:defaultlangid]}')]/..").each { |node| node.remove! }
-        
+
         @categories = doc.root.find("rdf:Description/rdf:type[contains(@rdf:resource, '#{MATCHERS[:doccat]}')]/..").map do |node|
           category = Category.new
           category.name = node.find_first("c:categoryName").content
           category.score = node.find_first("c:score").content.to_f
-          
+
           node.remove!
           category
         end
-        
+
         @relevances = doc.root.find("rdf:Description/rdf:type[contains(@rdf:resource, '#{MATCHERS[:relevances]}')]/..").inject({}) do |acc, node|
           subject_hash = node.find_first("c:subject")[:resource].split('/')[-1]
           acc[subject_hash] = node.find_first("c:relevance").content.to_f
-          
+
           node.remove!
           acc
         end
@@ -108,18 +108,18 @@ module Calais
 
           relevance = @relevances[extracted_hash]
           entity.relevance = relevance if relevance
-          
+
           entity.instances = get_instance_nodes(doc, extracted_hash).map do |instance_node|
             instance = Instance.from_node(instance_node)
             instance_node.remove!
-            
+
             instance
           end
 
           node.remove!
           entity
         end
-        
+
         @relations = doc.root.find("rdf:Description/rdf:type[contains(@rdf:resource, '#{MATCHERS[:relations]}')]/..").map do |node|
           extracted_hash = node['about'].split('/')[-1] rescue nil
 
@@ -127,18 +127,18 @@ module Calais
           relation.hash = CalaisHash.find_or_create(extracted_hash, @hashes)
           relation.type = node.find("*[name()='rdf:type']")[0]['resource'].split('/')[-1] rescue nil
           relation.attributes = extract_attributes(node.find("*[contains(name(), 'c:')]"))
-          
+
           relation.instances = get_instance_nodes(doc, extracted_hash).map do |instance_node|
             instance = Instance.from_node(instance_node)
             instance_node.remove!
-            
+
             instance
           end
-          
+
           node.remove!
           relation
         end
-        
+
         @geographies = doc.root.find("rdf:Description/rdf:type[contains(@rdf:resource, '#{MATCHERS[:geographies]}')]/..").map do |node|
           attributes = extract_attributes(node.find("*[contains(name(), 'c:')]"))
 
@@ -150,7 +150,7 @@ module Calais
           node.remove!
           geography
         end
-        
+
         doc.root.find("./*").each { |node| node.remove! }
 
         return

@@ -6,7 +6,6 @@ describe Calais::Response, :new do
   end
 end
 
-
 describe Calais::Response, :new do
   before :all do
     @response = Calais::Response.new(SAMPLE_RESPONSE)
@@ -115,5 +114,4 @@ describe Calais::Response, :new do
     rel.instances.first.offset.should == 425
     rel.instances.first.length.should == 99
   end
-
 end
