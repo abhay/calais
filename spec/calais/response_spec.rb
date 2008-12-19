@@ -1,7 +1,7 @@
 require File.join(File.dirname(__FILE__), %w[.. helper])
 
 describe Calais::Response, :new do
-  it 'accepts a json string to generate the response object' do
+  it 'accepts an rdf string to generate the response object' do
     lambda { Calais::Response.new(SAMPLE_RESPONSE) }.should_not raise_error
   end
 end
