@@ -12,6 +12,7 @@ module Calais
       :relevances => 'type/sys/RelevanceInfo',
     }
 
+    attr_accessor :submitter_code, :signature, :language, :submission_date, :request_id, :doc_title, :doc_date
     attr_accessor :hashes, :entities, :relations, :geographies, :categories
 
     def initialize(rdf_string)
@@ -77,9 +78,28 @@ module Calais
       def extract_data
         doc = XML::Parser.string(@raw_response).parse
 
-        doc.root.find("rdf:Description/rdf:type[contains(@rdf:resource, '#{MATCHERS[:docinfo]}')]/..").each { |node| node.remove! }
-        doc.root.find("rdf:Description/rdf:type[contains(@rdf:resource, '#{MATCHERS[:docinfometa]}')]/..").each { |node| node.remove! }
-        doc.root.find("rdf:Description/rdf:type[contains(@rdf:resource, '#{MATCHERS[:defaultlangid]}')]/..").each { |node| node.remove! }
+        doc.root.find("rdf:Description/rdf:type[contains(@rdf:resource, '#{MATCHERS[:docinfometa]}')]/..").each do |node|
+          @language = node['language']
+          @submission_date =  DateTime.parse node['submissionDate']
+
+          attributes = extract_attributes(node.find("*[contains(name(), 'c:')]"))
+
+          @signature = attributes.delete('signature')
+          @submitter_code = attributes.delete('submitterCode')
+
+          node.remove!
+        end
+
+        doc.root.find("rdf:Description/rdf:type[contains(@rdf:resource, '#{MATCHERS[:docinfo]}')]/..").each do |node|
+          @request_id = node['calaisRequestID']
+
+          attributes = extract_attributes(node.find("*[contains(name(), 'c:')]"))
+
+          @doc_title = attributes.delete('docTitle')
+          @doc_date = Date.parse attributes.delete('docDate')
+
+          node.remove!
+        end
 
         @categories = doc.root.find("rdf:Description/rdf:type[contains(@rdf:resource, '#{MATCHERS[:doccat]}')]/..").map do |node|
           category = Category.new
@@ -138,6 +158,7 @@ module Calais
           geography
         end
 
+        doc.root.find("rdf:Description/rdf:type[contains(@rdf:resource, '#{MATCHERS[:defaultlangid]}')]/..").each { |node| node.remove! }
         doc.root.find("./*").each { |node| node.remove! }
 
         return
@@ -159,7 +180,7 @@ module Calais
       rescue
         nil
       end
-      
+
       def extract_attributes(nodes)
         nodes.inject({}) do |hsh, node|
           value = if node['resource']

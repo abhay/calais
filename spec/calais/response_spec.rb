@@ -11,6 +11,16 @@ describe Calais::Response, :new do
     @response = Calais::Response.new(SAMPLE_RESPONSE)
   end
 
+  it 'should extract document information' do
+    @response.language.should == 'English'
+    @response.submission_date.should be_a_kind_of(DateTime)
+    @response.signature.should == 'digestalg-1|iCEVI2NK1nAAvP+p5uaqnHISxdo=|U3QC5z6ZN1DLUJrqiP6gpTuxrdAxOaVOrjUQVuarCmb+zoqbm2fypA=='
+    @response.submitter_code.should == '4a388fbc-9897-def9-9233-efddbfbca363'
+    @response.request_id.should == '896ffd83-ad5f-4e4b-892b-4cc337a246af'
+    @response.doc_title.should == 'Record number of bicycles sold in Australia in 2006'
+    @response.doc_date.should be_a_kind_of(Date)
+  end
+
   it 'should extract entities' do
     entities = @response.entities
     entities.map { |e| e.type }.sort.uniq.should == %w[City Continent Country IndustryTerm Organization Person ProvinceOrState]
