@@ -79,7 +79,7 @@ module Calais
         doc = XML::Parser.string(@raw_response).parse
 
         if doc.root.find("/Error").first
-          raise RuntimeError, doc.root.find("/Error/Exception").first.content
+          raise Calais::Error, doc.root.find("/Error/Exception").first.content
         end        
 
         doc.root.find("rdf:Description/rdf:type[contains(@rdf:resource, '#{MATCHERS[:docinfometa]}')]/..").each do |node|

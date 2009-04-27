@@ -16,6 +16,7 @@ $:.unshift File.expand_path(File.dirname(__FILE__)) + '/calais'
 
 require 'client'
 require 'response'
+require 'error'
 
 module Calais
   REST_ENDPOINT = "http://api.opencalais.com/enlighten/rest/"

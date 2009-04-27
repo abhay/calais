@@ -10,7 +10,7 @@ describe Calais::Response, :new do
   it "should return error message in runtime error" do
     lambda {
       @response = Calais::Response.new(RESPONSE_WITH_EXCEPTION)
-    }.should raise_error(RuntimeError, "My Error Message") 
+    }.should raise_error(Calais::Error, "My Error Message") 
   end
 end
 
