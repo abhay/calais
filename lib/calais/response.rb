@@ -78,6 +78,10 @@ module Calais
       def extract_data
         doc = XML::Parser.string(@raw_response).parse
 
+        if doc.root.find("/Error").first
+          raise RuntimeError, doc.root.find("/Error/Exception").first.content
+        end        
+
         doc.root.find("rdf:Description/rdf:type[contains(@rdf:resource, '#{MATCHERS[:docinfometa]}')]/..").each do |node|
           @language = node['language']
           @submission_date =  DateTime.parse node['submissionDate']
