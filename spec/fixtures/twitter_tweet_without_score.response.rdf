@@ -1,0 +1,96 @@
+<!--Use of the Calais Web Service is governed by the Terms of Service located at http://www.opencalais.com. By using this service or the results of the service you agree to these terms of service.-->
+<!--Relations: \n\nPerson: Britney Spears\nPosition: manager Gets Three-year Restraining Order http://tinyurl.com/c3an83 \nURL: http://tinyurl.com/c3an83-->
+<rdf:RDF xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#" xmlns:c="http://s.opencalais.com/1/pred/">
+  <rdf:Description c:calaisRequestID="3b38063c-3501-4616-a147-dc320524e4cd" c:id="http://id.opencalais.com/R-K97XNFMWlvNk3egqmtkQ" rdf:about="http://d.opencalais.com/dochash-1/01a2b473-4a92-3910-907c-0a6600ef6d4c">
+    <rdf:type rdf:resource="http://s.opencalais.com/1/type/sys/DocInfo"/>
+    <c:document><![CDATA[<Document><Date>2009-04-29</Date><Body>New blog post: Britney Spears - Britneys Ex-manager Gets Three-year Restraining Order http://tinyurl.com/c3an83</Body></Document>]]></c:document>
+    <c:docTitle/>
+    <c:docDate>2009-04-29 00:00:00</c:docDate>
+  </rdf:Description>
+  <rdf:Description c:contentType="text/txt" c:emVer="UserVocabulariesIM" c:langIdVer="DefaultLangId" c:language="English" c:processingVer="CalaisJob01" c:submissionDate="2009-04-29 06:31:24.479" rdf:about="http://d.opencalais.com/dochash-1/01a2b473-4a92-3910-907c-0a6600ef6d4c/meta">
+    <rdf:type rdf:resource="http://s.opencalais.com/1/type/sys/DocInfoMeta"/>
+    <c:docId rdf:resource="http://d.opencalais.com/dochash-1/01a2b473-4a92-3910-907c-0a6600ef6d4c"/>
+    <c:submitterCode>5f1011ef-16a9-ad05-71f7-2258f1fbe2dd</c:submitterCode>
+    <c:signature>digestalg-1|eh73JHhsWKBVyFFeemW2y8tLl9s=|Bifo1lubGloW3drezb2RF7jXHipJtxP4pZL9INI3HdRwFIKmbrkxqg==</c:signature>
+  </rdf:Description>
+  <rdf:Description rdf:about="http://d.opencalais.com/dochash-1/01a2b473-4a92-3910-907c-0a6600ef6d4c/lid/DefaultLangId">
+    <rdf:type rdf:resource="http://s.opencalais.com/1/type/lid/DefaultLangId"/>
+    <c:docId rdf:resource="http://d.opencalais.com/dochash-1/01a2b473-4a92-3910-907c-0a6600ef6d4c"/>
+    <c:lang rdf:resource="http://d.opencalais.com/lid/DefaultLangId/English"/>
+  </rdf:Description>
+  <rdf:Description rdf:about="http://d.opencalais.com/dochash-1/01a2b473-4a92-3910-907c-0a6600ef6d4c/cat/1">
+    <rdf:type rdf:resource="http://s.opencalais.com/1/type/cat/DocCat"/>
+    <c:docId rdf:resource="http://d.opencalais.com/dochash-1/01a2b473-4a92-3910-907c-0a6600ef6d4c"/>
+    <c:category rdf:resource="http://d.opencalais.com/cat/Calais/Other"/>
+    <c:classifierName>Calais</c:classifierName>
+    <c:categoryName>Other</c:categoryName>
+  </rdf:Description>
+  <rdf:Description rdf:about="http://d.opencalais.com/genericHasher-1/ac60b58e-e2a3-3517-9a58-fbd272891cc4">
+    <rdf:type rdf:resource="http://s.opencalais.com/1/type/em/e/Position"/>
+    <c:name>manager Gets Three-year Restraining Order http://tinyurl.com/c3an83 </c:name>
+  </rdf:Description>
+  <rdf:Description rdf:about="http://d.opencalais.com/dochash-1/01a2b473-4a92-3910-907c-0a6600ef6d4c/Instance/1">
+    <rdf:type rdf:resource="http://s.opencalais.com/1/type/sys/InstanceInfo"/>
+    <c:docId rdf:resource="http://d.opencalais.com/dochash-1/01a2b473-4a92-3910-907c-0a6600ef6d4c"/>
+    <c:subject rdf:resource="http://d.opencalais.com/genericHasher-1/ac60b58e-e2a3-3517-9a58-fbd272891cc4"/>
+<!--Position: manager Gets Three-year Restraining Order http://tinyurl.com/c3an83 ; -->
+    <c:detection>[blog post: Britney Spears - Britneys Ex-]manager Gets Three-year Restraining Order http://tinyurl.com/c3an83[&lt;/Body&gt;&lt;/Document&gt;]</c:detection>
+    <c:prefix>blog post: Britney Spears - Britneys Ex-</c:prefix>
+    <c:exact>manager Gets Three-year Restraining Order http://tinyurl.com/c3an83</c:exact>
+    <c:suffix>&lt;/Body&gt;&lt;/Document&gt;</c:suffix>
+    <c:offset>83</c:offset>
+    <c:length>67</c:length>
+  </rdf:Description>
+  <rdf:Description rdf:about="http://d.opencalais.com/dochash-1/01a2b473-4a92-3910-907c-0a6600ef6d4c/Relevance/1">
+    <rdf:type rdf:resource="http://s.opencalais.com/1/type/sys/RelevanceInfo"/>
+    <c:docId rdf:resource="http://d.opencalais.com/dochash-1/01a2b473-4a92-3910-907c-0a6600ef6d4c"/>
+    <c:subject rdf:resource="http://d.opencalais.com/genericHasher-1/ac60b58e-e2a3-3517-9a58-fbd272891cc4"/>
+    <c:relevance>0.667</c:relevance>
+  </rdf:Description>
+  <rdf:Description rdf:about="http://d.opencalais.com/genericHasher-1/139fec3a-5961-37cf-8b4f-55077a04e58e">
+    <rdf:type rdf:resource="http://s.opencalais.com/1/type/em/e/URL"/>
+    <c:name>http://tinyurl.com/c3an83</c:name>
+  </rdf:Description>
+  <rdf:Description rdf:about="http://d.opencalais.com/dochash-1/01a2b473-4a92-3910-907c-0a6600ef6d4c/Instance/2">
+    <rdf:type rdf:resource="http://s.opencalais.com/1/type/sys/InstanceInfo"/>
+    <c:docId rdf:resource="http://d.opencalais.com/dochash-1/01a2b473-4a92-3910-907c-0a6600ef6d4c"/>
+    <c:subject rdf:resource="http://d.opencalais.com/genericHasher-1/139fec3a-5961-37cf-8b4f-55077a04e58e"/>
+<!--URL: http://tinyurl.com/c3an83; -->
+    <c:detection>[Ex-manager Gets Three-year Restraining Order ]http://tinyurl.com/c3an83[&lt;/Body&gt;&lt;/Document&gt;]</c:detection>
+    <c:prefix>Ex-manager Gets Three-year Restraining Order </c:prefix>
+    <c:exact>http://tinyurl.com/c3an83</c:exact>
+    <c:suffix>&lt;/Body&gt;&lt;/Document&gt;</c:suffix>
+    <c:offset>125</c:offset>
+    <c:length>25</c:length>
+  </rdf:Description>
+  <rdf:Description rdf:about="http://d.opencalais.com/dochash-1/01a2b473-4a92-3910-907c-0a6600ef6d4c/Relevance/2">
+    <rdf:type rdf:resource="http://s.opencalais.com/1/type/sys/RelevanceInfo"/>
+    <c:docId rdf:resource="http://d.opencalais.com/dochash-1/01a2b473-4a92-3910-907c-0a6600ef6d4c"/>
+    <c:subject rdf:resource="http://d.opencalais.com/genericHasher-1/139fec3a-5961-37cf-8b4f-55077a04e58e"/>
+    <c:relevance>0.667</c:relevance>
+  </rdf:Description>
+  <rdf:Description rdf:about="http://d.opencalais.com/pershash-1/8145a3e3-6537-31d3-aa64-bba9cf8627e9">
+    <rdf:type rdf:resource="http://s.opencalais.com/1/type/em/e/Person"/>
+    <c:name>Britney Spears</c:name>
+    <c:persontype>entertainment</c:persontype>
+    <c:nationality>N/A</c:nationality>
+  </rdf:Description>
+  <rdf:Description rdf:about="http://d.opencalais.com/dochash-1/01a2b473-4a92-3910-907c-0a6600ef6d4c/Instance/3">
+    <rdf:type rdf:resource="http://s.opencalais.com/1/type/sys/InstanceInfo"/>
+    <c:docId rdf:resource="http://d.opencalais.com/dochash-1/01a2b473-4a92-3910-907c-0a6600ef6d4c"/>
+    <c:subject rdf:resource="http://d.opencalais.com/pershash-1/8145a3e3-6537-31d3-aa64-bba9cf8627e9"/>
+<!--Person: Britney Spears; -->
+    <c:detection>[ument&gt;&lt;Date&gt;2009-04-29&lt;/Date&gt;&lt;Body&gt;New blog post: ]Britney Spears[ - Britneys Ex-manager Gets Three-year]</c:detection>
+    <c:prefix>ument&gt;&lt;Date&gt;2009-04-29&lt;/Date&gt;&lt;Body&gt;New blog post: </c:prefix>
+    <c:exact>Britney Spears</c:exact>
+    <c:suffix> - Britneys Ex-manager Gets Three-year</c:suffix>
+    <c:offset>54</c:offset>
+    <c:length>14</c:length>
+  </rdf:Description>
+  <rdf:Description rdf:about="http://d.opencalais.com/dochash-1/01a2b473-4a92-3910-907c-0a6600ef6d4c/Relevance/3">
+    <rdf:type rdf:resource="http://s.opencalais.com/1/type/sys/RelevanceInfo"/>
+    <c:docId rdf:resource="http://d.opencalais.com/dochash-1/01a2b473-4a92-3910-907c-0a6600ef6d4c"/>
+    <c:subject rdf:resource="http://d.opencalais.com/pershash-1/8145a3e3-6537-31d3-aa64-bba9cf8627e9"/>
+    <c:relevance>0.667</c:relevance>
+  </rdf:Description>
+</rdf:RDF>

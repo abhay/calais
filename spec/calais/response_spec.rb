@@ -75,7 +75,16 @@ describe Calais::Response, :new do
   it 'should find the correct document category scores returned by OpenCalais' do
     @response.categories.map {|c| c.score }.should == [1.0, 1.0]
   end
-
+  
+  it "should not raise an error if no score is given by OpenCalais" do
+    lambda {Calais::Response.new(SAMPLE_RESPONSE_WITH_NO_SCORE)}.should_not raise_error
+  end
+  
+  it "should not raise an error if no score is given by OpenCalais" do
+    response = Calais::Response.new(SAMPLE_RESPONSE_WITH_NO_SCORE)
+    response.categories.map {|c| c.score }.should == [nil]
+  end
+  
   it 'should find instances for each entity' do
     @response.entities.each {|e|
       e.instances.size.should > 0

@@ -108,7 +108,8 @@ module Calais
         @categories = doc.root.find("rdf:Description/rdf:type[contains(@rdf:resource, '#{MATCHERS[:doccat]}')]/..").map do |node|
           category = Category.new
           category.name = node.find_first("c:categoryName").content
-          category.score = node.find_first("c:score").content.to_f
+          score = node.find_first("c:score")
+          category.score = score.content.to_f unless score.nil?
 
           node.remove!
           category
