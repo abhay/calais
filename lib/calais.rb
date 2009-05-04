@@ -41,7 +41,7 @@ module Calais
 
   MAX_RETRIES = 5
   HTTP_TIMEOUT = 60
-  MIN_CONTENT_SIZE = 100
+  MIN_CONTENT_SIZE = 1
   MAX_CONTENT_SIZE = 100_000
 
   class << self

@@ -29,15 +29,15 @@ module Calais
     end
 
     class Entity
-      attr_accessor :hash, :type, :attributes, :relevance, :instances
+      attr_accessor :calais_hash, :type, :attributes, :relevance, :instances
     end
 
     class Relation
-      attr_accessor :hash, :type, :attributes, :instances
+      attr_accessor :calais_hash, :type, :attributes, :instances
     end
 
     class Geography
-      attr_accessor :name, :hash, :attributes
+      attr_accessor :name, :calais_hash, :attributes
     end
 
     class Category
@@ -127,7 +127,7 @@ module Calais
           extracted_hash = node['about'].split('/')[-1] rescue nil
 
           entity = Entity.new
-          entity.hash = CalaisHash.find_or_create(extracted_hash, @hashes)
+          entity.calais_hash = CalaisHash.find_or_create(extracted_hash, @hashes)
           entity.type = extract_type(node)
           entity.attributes = extract_attributes(node.find("*[contains(name(), 'c:')]"))
 
@@ -142,7 +142,7 @@ module Calais
           extracted_hash = node['about'].split('/')[-1] rescue nil
 
           relation = Relation.new
-          relation.hash = CalaisHash.find_or_create(extracted_hash, @hashes)
+          relation.calais_hash = CalaisHash.find_or_create(extracted_hash, @hashes)
           relation.type = extract_type(node)
           relation.attributes = extract_attributes(node.find("*[contains(name(), 'c:')]"))
           relation.instances = extract_instances(doc, extracted_hash)
@@ -156,7 +156,7 @@ module Calais
 
           geography = Geography.new
           geography.name = attributes.delete('name')
-          geography.hash = attributes.delete('subject')
+          geography.calais_hash = attributes.delete('subject')
           geography.attributes = attributes
 
           node.remove!

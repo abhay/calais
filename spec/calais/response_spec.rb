@@ -65,7 +65,7 @@ describe Calais::Response, :new do
       "0c3d5340-106f-390e-92d3-a4aa18004fb8" => 0.158,
       "3bcf2655-ff2a-3a80-8de4-558b9626ad21" => 0.644
     }
-    @response.entities.each {|e| correct_relevances[e.hash.value].should == e.relevance }
+    @response.entities.each {|e| correct_relevances[e.calais_hash.value].should == e.relevance }
   end
 
   it 'should find the correct document categories returned by OpenCalais' do
@@ -132,7 +132,7 @@ describe Calais::Response, :new do
     ## thorough test that tests for the instances of each of the many other
     ## relations in the sample doc is desirable in the future.
 
-    rel = @response.relations.select {|e| e.hash.value == "8f3936d9-cf6b-37fc-ae0d-a145959ae3b5" }.first
+    rel = @response.relations.select {|e| e.calais_hash.value == "8f3936d9-cf6b-37fc-ae0d-a145959ae3b5" }.first
     rel.instances.size.should == 1
 
     rel.instances.first.prefix.should == " manufacturers.\n\nThe Cycling Promotion Fund (CPF) "
