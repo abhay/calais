@@ -54,7 +54,3 @@ module Calais
     end
   end
 end
-
-module Calais
-  VERSION = '0.0.6'
-end

@@ -1,4 +1,6 @@
 .DS_Store
+.yardoc
 coverage
 pkg
+doc
 spec/fixtures/calais.yml
