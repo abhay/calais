@@ -46,4 +46,4 @@ You can install the Calais gem via Rubygems (`gem install calais`) or by buildin
 
 ## Acknowledgements ##
 
-* [Paul Legato](http://www.economaton.com/): Help all around with the new response processor and implementation of the 4.0 API.
+* [Paul Legato](http://www.economaton.com/): Help all around with the new response processor and implementation of the 3.1 API.
