@@ -55,7 +55,7 @@ begin
   require 'yard/rake/yardoc_task'
 
   YARD::Rake::YardocTask.new do |t|
-    t.files = ['lib/**/*.rb', 'MIT-LICENSE', 'CHANGELOG.markdown']
+    t.options = ["--verbose", "--markup=markdown", "--files=CHANGELOG.markdown,MIT-LICENSE"]
   end
   
   task :rdoc => :yardoc
