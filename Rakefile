@@ -54,8 +54,12 @@ begin
   require 'yard'
   require 'yard/rake/yardoc_task'
 
-  YARD::Rake::YardocTask.new
+  YARD::Rake::YardocTask.new do |t|
+    t.files = ['lib/**/*.rb', 'MIT-LICENSE', 'CHANGELOG.markdown']
+  end
+  
   task :rdoc => :yardoc
+  
   CLOBBER.include 'doc'
   CLOBBER.include '.yardoc'
 rescue LoadError
