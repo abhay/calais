@@ -12,7 +12,7 @@ A Ruby interface to the [Open Calais Web Service](http://opencalais.com)
 This is a very basic wrapper to the Open Calais API. It uses the POST endpoint and currently supports the Enlighten action. Here's a simple call:
 
     Calais.enlighten(
-        :content => "The government of the United Kingdom has given corporations like fast food chain McDonald's the right to award high school qualifications to
+        :content => "The government of the United Kingdom has given corporations like fast food chain McDonald's the right to award high school qualifications to employees who complete a company training program."
         :content_type => :text, 
         :license_id => LICENSE_ID
     )
@@ -22,7 +22,7 @@ This is the easiest way to get the RDF-formated response from the OpenCalais ser
 If you want to do something more fun like getting all sorts of fun information about a document, you can try this:
 
     Calais.process_document(
-        :content => "The government of the United Kingdom has given corporations like fast food chain McDonald's the right to award high school qualifications to employees who complete a company training program.", 
+        :content => "The government of the United Kingdom has given corporations like fast food chain McDonald's the right to award high school qualifications to employees who complete a company training program.",
         :content_type => :text, 
         :license_id => LICENSE_ID
     )
