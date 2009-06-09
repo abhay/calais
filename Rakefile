@@ -12,7 +12,7 @@ begin
   Jeweler::Tasks.new do |s|
     s.name = 'calais'
     s.summary = 'A Ruby interface to the Calais Web Service'
-    s.email = 'gems@opensynapse.net'
+    s.email = 'info@opensynapse.net'
     s.homepage = 'http://github.com/abhay/calais'
     s.description = 'A Ruby interface to the Calais Web Service'
     s.authors = ['Abhay Kumar']
