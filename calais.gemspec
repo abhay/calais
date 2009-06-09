@@ -2,20 +2,20 @@
 
 Gem::Specification.new do |s|
   s.name = %q{calais}
-  s.version = "0.0.6"
+  s.version = "0.0.7"
 
   s.required_rubygems_version = Gem::Requirement.new(">= 0") if s.respond_to? :required_rubygems_version=
   s.authors = ["Abhay Kumar"]
   s.date = %q{2009-06-08}
   s.description = %q{A Ruby interface to the Calais Web Service}
-  s.email = %q{gems@opensynapse.net}
+  s.email = %q{info@opensynapse.net}
   s.extra_rdoc_files = [
-    "README.txt"
+    "README.markdown"
   ]
   s.files = [
-    "History.txt",
+    "CHANGELOG.markdown",
      "MIT-LICENSE",
-     "README.txt",
+     "README.markdown",
      "Rakefile",
      "VERSION.yml",
      "lib/calais.rb",
@@ -27,6 +27,7 @@ Gem::Specification.new do |s|
   s.homepage = %q{http://github.com/abhay/calais}
   s.rdoc_options = ["--charset=UTF-8"]
   s.require_paths = ["lib"]
+  s.rubyforge_project = %q{calais}
   s.rubygems_version = %q{1.3.1}
   s.summary = %q{A Ruby interface to the Calais Web Service}
   s.test_files = [
