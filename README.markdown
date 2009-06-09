@@ -14,7 +14,7 @@ This is a very basic wrapper to the Open Calais API. It uses the POST endpoint a
     Calais.enlighten(
         :content => "The government of the United Kingdom has given corporations like fast food chain McDonald's the right to award high school qualifications to employees who complete a company training program."
         :content_type => :text, 
-        :license_id => LICENSE_ID
+        :license_id => 'your license id'
     )
 
 This is the easiest way to get the RDF-formated response from the OpenCalais service.
@@ -23,27 +23,27 @@ If you want to do something more fun like getting all sorts of fun information a
 
     Calais.process_document(
         :content => "The government of the United Kingdom has given corporations like fast food chain McDonald's the right to award high school qualifications to employees who complete a company training program.",
-        :content_type => :text, 
-        :license_id => LICENSE_ID
+        :content_type => :text,
+        :license_id => 'your license id'
     )
 
 This will return an object containing information extracted from the RDF response.
 
 ## Requirements ##
 
-* Ruby 1.8.5 or better
-  * Uses the following standard libraries: digest/sha1, net/http, yaml, cgi, iconv, set
-* libxml-ruby, libxml2
-* curb, libcurl
+* [Ruby 1.8.5 or better](http://ruby-lang.org)
+* [libxml-ruby](http://libxml.rubyforge.org/), [libxml2](http://xmlsoft.org/)
+* [curb](http://curb.rubyforge.org/), [libcurl](http://curl.haxx.se/)
+* [json](http://json.rubyforge.org/)
 
 ## Install ##
 
-You can install the Calais gem via Rubygems (gem install calais) or by building from source.
+You can install the Calais gem via Rubygems (`gem install calais`) or by building from source.
 
 ## Authors ##
 
-[Abhay Kumar](http://opensynapse.net) 
+* [Abhay Kumar](http://opensynapse.net) 
 
 ## Acknowledgements ##
 
-[Paul Legato](http://www.economaton.com/): Help all around with the new response processor and implementation of the latest API.
+* [Paul Legato](http://www.economaton.com/): Help all around with the new response processor and implementation of the 4.0 API.
