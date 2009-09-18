@@ -38,36 +38,37 @@ module Calais
 
     def params_xml
       check_params
-
-      params_node = XML::Node.new('c:params')
+      document = Nokogiri::XML::Document.new
+      
+      params_node = Nokogiri::XML::Node.new('c:params', document)
       params_node['xmlns:c'] = 'http://s.opencalais.com/1/pred/'
       params_node['xmlns:rdf'] = 'http://www.w3.org/1999/02/22-rdf-syntax-ns#'
-
-      processing_node = XML::Node.new('c:processingDirectives')
+      
+      processing_node = Nokogiri::XML::Node.new('c:processingDirectives', document)
       processing_node['c:contentType'] = AVAILABLE_CONTENT_TYPES[@content_type] if @content_type
       processing_node['c:outputFormat'] = AVAILABLE_OUTPUT_FORMATS[@output_format] if @output_format
       processing_node['c:reltagBaseURL'] = @reltag_base_url.to_s if @reltag_base_url
-
+      
       processing_node['c:enableMetadataType'] = @metadata_enables.join(';') unless @metadata_enables.empty?
       processing_node['c:discardMetadata'] = @metadata_discards.join(';') unless @metadata_discards.empty?
       processing_node['c:omitOutputtingOriginalText'] = 'true' if @omit_outputting_original_text
-
-      user_node = XML::Node.new('c:userDirectives')
+      
+      user_node = Nokogiri::XML::Node.new('c:userDirectives', document)
       user_node['c:allowDistribution'] = @allow_distribution.to_s unless @allow_distribution.nil?
       user_node['c:allowSearch'] = @allow_search.to_s unless @allow_search.nil?
       user_node['c:externalID'] = @external_id.to_s if @external_id
       user_node['c:submitter'] = @submitter.to_s if @submitter
-
+      
       params_node << processing_node
       params_node << user_node
-
+      
       if @external_metadata
-        external_node = XML::Node.new('c:externalMetadata')
+        external_node = Nokogiri::XML::Node.new('c:externalMetadata', document)
         external_node << @external_metadata
         params_node << external_node
       end
-
-      params_node.to_s
+      
+      params_node.to_xml(:indent => 2)
     end
 
     private

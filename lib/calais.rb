@@ -5,7 +5,7 @@ require 'iconv'
 require 'set'
 
 require 'rubygems'
-require 'xml/libxml'
+require 'nokogiri'
 require 'json'
 require 'curb'
 

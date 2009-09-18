@@ -32,7 +32,7 @@ end
 describe Calais::Client, :params_xml do
   it 'returns an xml encoded string' do
     client = Calais::Client.new(:content => SAMPLE_DOCUMENT, :license_id => LICENSE_ID)
-    client.params_xml.should == %[<c:params xmlns:c="http://s.opencalais.com/1/pred/" xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#">\n  <c:processingDirectives/>\n  <c:userDirectives/>\n</c:params>]
+    client.params_xml.should == %[<c:params xmlns:c=\"http://s.opencalais.com/1/pred/\" xmlns:rdf=\"http://www.w3.org/1999/02/22-rdf-syntax-ns#\"><c:processingDirectives/><c:userDirectives/></c:params>]
 
     client.content_type = :xml
     client.output_format = :json
@@ -45,7 +45,7 @@ describe Calais::Client, :params_xml do
     client.external_id = Digest::SHA1.hexdigest(client.content)
     client.submitter = 'calais.rb'
 
-    client.params_xml.should == %[<c:params xmlns:c="http://s.opencalais.com/1/pred/" xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#">\n  <c:processingDirectives c:contentType="text/xml" c:outputFormat="application/json" c:reltagBaseURL="http://opencalais.com" c:enableMetadataType="GenericRelations" c:discardMetadata="er/Company;er/Geo"/>\n  <c:userDirectives c:allowDistribution="true" c:allowSearch="true" c:externalID="1a008b91e7d21962e132bc1d6cb252532116a606" c:submitter="calais.rb"/>\n</c:params>]
+    client.params_xml.should == %[<c:params xmlns:c="http://s.opencalais.com/1/pred/" xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#"><c:processingDirectives c:contentType="text/xml" c:outputFormat="application/json" c:reltagBaseURL="http://opencalais.com" c:enableMetadataType="GenericRelations" c:discardMetadata="er/Company;er/Geo"/><c:userDirectives c:allowDistribution="true" c:allowSearch="true" c:externalID="1a008b91e7d21962e132bc1d6cb252532116a606" c:submitter="calais.rb"/></c:params>]
   end
 end
 

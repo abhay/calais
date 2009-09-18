@@ -47,14 +47,14 @@ module Calais
     class Instance
       attr_accessor :prefix, :exact, :suffix, :offset, :length
 
-      # Makes a new Instance object from an appropriate LibXML::XML::Node.
+      # Makes a new Instance object from an appropriate Nokogiri::XML::Node.
       def self.from_node(node)
         instance = self.new
-        instance.prefix = node.find_first("c:prefix").content
-        instance.exact = node.find_first("c:exact").content
-        instance.suffix = node.find_first("c:suffix").content
-        instance.offset = node.find_first("c:offset").content.to_i
-        instance.length = node.find_first("c:length").content.to_i
+        instance.prefix = node.xpath("c:prefix[1]").first.content
+        instance.exact  = node.xpath("c:exact[1]").first.content
+        instance.suffix = node.xpath("c:suffix[1]").first.content
+        instance.offset = node.xpath("c:offset[1]").first.content.to_i
+        instance.length = node.xpath("c:length[1]").first.content.to_i
 
         instance
       end
@@ -76,112 +76,112 @@ module Calais
 
     private
       def extract_data
-        doc = XML::Parser.string(@raw_response).parse
+        doc = Nokogiri::XML(@raw_response)
 
-        if doc.root.find("/Error").first
-          raise Calais::Error, doc.root.find("/Error/Exception").first.content
+        if doc.root.xpath("/Error[1]").first
+          raise Calais::Error, doc.root.xpath("/Error/Exception").first.content
         end        
 
-        doc.root.find("rdf:Description/rdf:type[contains(@rdf:resource, '#{MATCHERS[:docinfometa]}')]/..").each do |node|
+        doc.root.xpath("rdf:Description/rdf:type[contains(@rdf:resource, '#{MATCHERS[:docinfometa]}')]/..").each do |node|
           @language = node['language']
           @submission_date =  DateTime.parse node['submissionDate']
 
-          attributes = extract_attributes(node.find("*[contains(name(), 'c:')]"))
+          attributes = extract_attributes(node.xpath("*[contains(name(), 'c:')]"))
 
           @signature = attributes.delete('signature')
           @submitter_code = attributes.delete('submitterCode')
 
-          node.remove!
+          node.remove
         end
 
-        doc.root.find("rdf:Description/rdf:type[contains(@rdf:resource, '#{MATCHERS[:docinfo]}')]/..").each do |node|
+        doc.root.xpath("rdf:Description/rdf:type[contains(@rdf:resource, '#{MATCHERS[:docinfo]}')]/..").each do |node|
           @request_id = node['calaisRequestID']
 
-          attributes = extract_attributes(node.find("*[contains(name(), 'c:')]"))
+          attributes = extract_attributes(node.xpath("*[contains(name(), 'c:')]"))
 
           @doc_title = attributes.delete('docTitle')
-          @doc_date = Date.parse attributes.delete('docDate')
+          @doc_date = Date.parse(attributes.delete('docDate')) 
 
-          node.remove!
+          node.remove
         end
 
-        @categories = doc.root.find("rdf:Description/rdf:type[contains(@rdf:resource, '#{MATCHERS[:doccat]}')]/..").map do |node|
+        @categories = doc.root.xpath("rdf:Description/rdf:type[contains(@rdf:resource, '#{MATCHERS[:doccat]}')]/..").map do |node|
           category = Category.new
-          category.name = node.find_first("c:categoryName").content
-          score = node.find_first("c:score")
+          category.name = node.xpath("c:categoryName[1]").first.content
+          score = node.xpath("c:score[1]").first
           category.score = score.content.to_f unless score.nil?
 
-          node.remove!
+          node.remove
           category
         end
 
-        @relevances = doc.root.find("rdf:Description/rdf:type[contains(@rdf:resource, '#{MATCHERS[:relevances]}')]/..").inject({}) do |acc, node|
-          subject_hash = node.find_first("c:subject")[:resource].split('/')[-1]
-          acc[subject_hash] = node.find_first("c:relevance").content.to_f
+        @relevances = doc.root.xpath("rdf:Description/rdf:type[contains(@rdf:resource, '#{MATCHERS[:relevances]}')]/..").inject({}) do |acc, node|
+          subject_hash = node.xpath("c:subject[1]").first[:resource].split('/')[-1]
+          acc[subject_hash] = node.xpath("c:relevance[1]").first.content.to_f
 
-          node.remove!
+          node.remove
           acc
         end
 
-        @entities = doc.root.find("rdf:Description/rdf:type[contains(@rdf:resource, '#{MATCHERS[:entities]}')]/..").map do |node|
+        @entities = doc.root.xpath("rdf:Description/rdf:type[contains(@rdf:resource, '#{MATCHERS[:entities]}')]/..").map do |node|
           extracted_hash = node['about'].split('/')[-1] rescue nil
 
           entity = Entity.new
           entity.calais_hash = CalaisHash.find_or_create(extracted_hash, @hashes)
           entity.type = extract_type(node)
-          entity.attributes = extract_attributes(node.find("*[contains(name(), 'c:')]"))
+          entity.attributes = extract_attributes(node.xpath("*[contains(name(), 'c:')]"))
 
           entity.relevance = @relevances[extracted_hash]
           entity.instances = extract_instances(doc, extracted_hash)
 
-          node.remove!
+          node.remove
           entity
         end
 
-        @relations = doc.root.find("rdf:Description/rdf:type[contains(@rdf:resource, '#{MATCHERS[:relations]}')]/..").map do |node|
+        @relations = doc.root.xpath("rdf:Description/rdf:type[contains(@rdf:resource, '#{MATCHERS[:relations]}')]/..").map do |node|
           extracted_hash = node['about'].split('/')[-1] rescue nil
 
           relation = Relation.new
           relation.calais_hash = CalaisHash.find_or_create(extracted_hash, @hashes)
           relation.type = extract_type(node)
-          relation.attributes = extract_attributes(node.find("*[contains(name(), 'c:')]"))
+          relation.attributes = extract_attributes(node.xpath("*[contains(name(), 'c:')]"))
           relation.instances = extract_instances(doc, extracted_hash)
 
-          node.remove!
+          node.remove
           relation
         end
 
-        @geographies = doc.root.find("rdf:Description/rdf:type[contains(@rdf:resource, '#{MATCHERS[:geographies]}')]/..").map do |node|
-          attributes = extract_attributes(node.find("*[contains(name(), 'c:')]"))
+        @geographies = doc.root.xpath("rdf:Description/rdf:type[contains(@rdf:resource, '#{MATCHERS[:geographies]}')]/..").map do |node|
+          attributes = extract_attributes(node.xpath("*[contains(name(), 'c:')]"))
 
           geography = Geography.new
           geography.name = attributes.delete('name')
           geography.calais_hash = attributes.delete('subject')
           geography.attributes = attributes
 
-          node.remove!
+          node.remove
           geography
         end
 
-        doc.root.find("rdf:Description/rdf:type[contains(@rdf:resource, '#{MATCHERS[:defaultlangid]}')]/..").each { |node| node.remove! }
-        doc.root.find("./*").each { |node| node.remove! }
+        doc.root.xpath("rdf:Description/rdf:type[contains(@rdf:resource, '#{MATCHERS[:defaultlangid]}')]/..").each { |node| node.remove }
+        doc.root.xpath("./*").each { |node| node.remove }
 
         return
       end
 
       def extract_instances(doc, hash)
-        doc.root.find("rdf:Description/rdf:type[contains(@rdf:resource, '#{MATCHERS[:instances]}')]/..").select do |instance_node|
-          instance_node.find_first("c:subject")[:resource].split("/")[-1] == hash
+        doc.root.xpath("rdf:Description/rdf:type[contains(@rdf:resource, '#{MATCHERS[:instances]}')]/..").select do |instance_node|
+          instance_node.xpath("c:subject[1]").first[:resource].split("/")[-1] == hash
         end.map do |instance_node|
           instance = Instance.from_node(instance_node)
-          instance_node.remove!
+          instance_node.remove
 
           instance
         end
       end
 
       def extract_type(node)
-        node.find("*[name()='rdf:type']")[0]['resource'].split('/')[-1]
+        node.xpath("*[name()='rdf:type']")[0]['resource'].split('/')[-1]
       rescue
         nil
       end

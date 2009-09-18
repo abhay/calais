@@ -18,7 +18,7 @@ begin
     s.authors = ['Abhay Kumar']
     s.files = FileList["[A-Z]*", "{bin,generators,lib,test}/**/*"]
     s.rubyforge_project = 'calais'
-    s.add_dependency 'libxml-ruby', '>= 0.5.4'
+    s.add_dependency 'nokogiri', '>= 1.3.3'
     s.add_dependency 'json', '>= 1.1.3'
     s.add_dependency 'curb', '>= 0.1.4'
   end
