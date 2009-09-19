@@ -32,7 +32,7 @@ This will return an object containing information extracted from the RDF respons
 ## Requirements ##
 
 * [Ruby 1.8.5 or better](http://ruby-lang.org)
-* [nokogiri](http://nokogiri.rubyforge.org/nokogiri/), [libxml2](http://xmlsoft.org/)
+* [nokogiri](http://nokogiri.rubyforge.org/nokogiri/), [libxml2](http://xmlsoft.org/), [libxslt](http://xmlsoft.org/xslt/)
 * [curb](http://curb.rubyforge.org/), [libcurl](http://curl.haxx.se/)
 * [json](http://json.rubyforge.org/)
 
