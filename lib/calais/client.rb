@@ -6,7 +6,7 @@ module Calais
 
     # processing directives
     attr_accessor :content_type, :output_format, :reltag_base_url, :calculate_relevance, :omit_outputting_original_text
-    attr_accessor :metadata_enables, :metadata_discards
+    attr_accessor :store_rdf, :metadata_enables, :metadata_discards
 
     # user directives
     attr_accessor :allow_distribution, :allow_search, :external_id, :submitter
@@ -51,6 +51,7 @@ module Calais
       processing_node['c:reltagBaseURL'] = @reltag_base_url.to_s if @reltag_base_url
       
       processing_node['c:enableMetadataType'] = @metadata_enables.join(',') unless @metadata_enables.empty?
+      processing_node['c:docRDFaccessible'] = @store_rdf if @store_rdf
       processing_node['c:discardMetadata'] = @metadata_discards.join(';') unless @metadata_discards.empty?
       processing_node['c:omitOutputtingOriginalText'] = 'true' if @omit_outputting_original_text
       
@@ -85,7 +86,7 @@ module Calais
         raise 'unknown content type' unless AVAILABLE_CONTENT_TYPES.keys.include?(@content_type) if @content_type
         raise 'unknown output format' unless AVAILABLE_OUTPUT_FORMATS.keys.include?(@output_format) if @output_format
 
-        %w[calculate_relevance allow_distribution allow_search].each do |variable|
+        %w[calculate_relevance store_rdf allow_distribution allow_search].each do |variable|
           value = self.send(variable)
           unless NilClass === value || TrueClass === value || FalseClass === value
             raise "expected a boolean value for #{variable} but got #{value}"
