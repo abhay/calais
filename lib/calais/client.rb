@@ -95,11 +95,11 @@ module Calais
 
         @metadata_enables ||= []
         unknown_enables = Set.new(@metadata_enables) - KNOWN_ENABLES
-        raise "unknown metadata enables: #{unknown_enables.to_ainspect}" unless unknown_enables.empty?
+        raise "unknown metadata enables: #{unknown_enables.to_a.inspect}" unless unknown_enables.empty?
 
         @metadata_discards ||= []
         unknown_discards = Set.new(@metadata_discards) - KNOWN_DISCARDS
-        raise "unknown metadata discards: #{unknown_discards.to_ainspect}" unless unknown_discards.empty?
+        raise "unknown metadata discards: #{unknown_discards.to_a.inspect}" unless unknown_discards.empty?
       end
 
       def do_request(post_fields)
