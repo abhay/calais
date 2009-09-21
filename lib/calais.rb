@@ -24,8 +24,8 @@ module Calais
 
   AVAILABLE_CONTENT_TYPES = {
     :xml => 'text/xml',
-    :text => 'text/txt',
     :html => 'text/html',
+    :htmlraw => 'text/htmlraw',
     :raw => 'text/raw'
   }
 
