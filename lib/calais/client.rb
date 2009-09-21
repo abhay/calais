@@ -47,6 +47,7 @@ module Calais
       processing_node = Nokogiri::XML::Node.new('c:processingDirectives', document)
       processing_node['c:contentType'] = AVAILABLE_CONTENT_TYPES[@content_type] if @content_type
       processing_node['c:outputFormat'] = AVAILABLE_OUTPUT_FORMATS[@output_format] if @output_format
+      processing_node['c:calculateRelevanceScore'] = 'false' if @calculate_relevance == false
       processing_node['c:reltagBaseURL'] = @reltag_base_url.to_s if @reltag_base_url
       
       processing_node['c:enableMetadataType'] = @metadata_enables.join(',') unless @metadata_enables.empty?
