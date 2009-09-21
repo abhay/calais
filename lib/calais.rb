@@ -37,7 +37,7 @@ module Calais
   }
 
   KNOWN_ENABLES = ['GenericRelations', 'SocialTags']
-  KNOWN_DISCARDS = ['er/Company', 'er/Geo']
+  KNOWN_DISCARDS = ['er/Company', 'er/Geo', 'er/Product']
 
   MAX_RETRIES = 5
   HTTP_TIMEOUT = 60
