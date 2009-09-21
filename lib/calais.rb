@@ -36,7 +36,7 @@ module Calais
     :json => 'application/json'
   }
 
-  KNOWN_ENABLES = ['GenericRelations']
+  KNOWN_ENABLES = ['GenericRelations', 'SocialTags']
   KNOWN_DISCARDS = ['er/Company', 'er/Geo']
 
   MAX_RETRIES = 5
