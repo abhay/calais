@@ -4,3 +4,4 @@ coverage
 pkg
 doc
 spec/fixtures/calais.yml
+.bundle
