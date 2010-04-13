@@ -9,9 +9,6 @@ require 'nokogiri'
 require 'json'
 require 'curb'
 
-#$KCODE = "UTF8"
-#require 'jcode'
-
 $:.unshift File.expand_path(File.dirname(__FILE__)) + '/calais'
 
 require 'client'
