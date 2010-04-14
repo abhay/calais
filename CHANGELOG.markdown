@@ -1,5 +1,10 @@
 # Changes
 
+## 0.0.9
+
+* updates related to API changes
+* community patches to support bundler, support ruby 1.9
+
 ## 0.0.8
 
 * community patches to use nokogiri
