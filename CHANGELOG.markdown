@@ -1,5 +1,9 @@
 # Changes
 
+## 0.0.8
+
+* community patches to use nokogiri
+
 ## 0.0.7
 * verified 4.0 API
 * moved gem packaging to `jeweler` and documentation to `yard`
