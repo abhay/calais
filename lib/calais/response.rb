@@ -13,7 +13,7 @@ module Calais
     }
 
     attr_accessor :submitter_code, :signature, :language, :submission_date, :request_id, :doc_title, :doc_date
-    attr_accessor :hashes, :entities, :relations, :geographies, :categories
+    attr_accessor :hashes, :entities, :relations, :geographies, :categories, :socialtags
 
     def initialize(rdf_string)
       @raw_response = rdf_string
@@ -24,7 +24,8 @@ module Calais
       @geographies = []
       @relevances = {} # key = String hash, val = Float relevance
       @categories = []
-
+      @socialtags = []
+      
       extract_data
     end
 
@@ -44,6 +45,10 @@ module Calais
       attr_accessor :name, :score
     end
 
+    class SocailTag
+      attr_accessor :name, :importance
+    end
+    
     class Instance
       attr_accessor :prefix, :exact, :suffix, :offset, :length
 
@@ -103,6 +108,16 @@ module Calais
           @doc_date = Date.parse(attributes.delete('docDate')) 
 
           node.remove
+        end
+
+        @socialtags = doc.root.xpath("rdf:Description/c:socialtag/..").map do |node|
+          tag = SocailTag.new
+          tag.name = node.xpath("c:name[1]").first.content
+          tag.importance = node.xpath("c:importance[1]").first.content.to_i
+          
+          node.remove if node.xpath("c:categoryName[1]").first.nil?
+          
+          tag
         end
 
         @categories = doc.root.xpath("rdf:Description/rdf:type[contains(@rdf:resource, '#{MATCHERS[:doccat]}')]/..").map do |node|
