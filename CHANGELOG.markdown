@@ -1,5 +1,9 @@
 # Changes
 
+## 0.0.10
+
+* community patch to expose SocialTags
+
 ## 0.0.9
 
 * updates related to API changes
