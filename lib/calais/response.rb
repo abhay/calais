@@ -45,7 +45,7 @@ module Calais
       attr_accessor :name, :score
     end
 
-    class SocailTag
+    class SocialTag
       attr_accessor :name, :importance
     end
     
@@ -111,7 +111,7 @@ module Calais
         end
 
         @socialtags = doc.root.xpath("rdf:Description/c:socialtag/..").map do |node|
-          tag = SocailTag.new
+          tag = SocialTag.new
           tag.name = node.xpath("c:name[1]").first.content
           tag.importance = node.xpath("c:importance[1]").first.content.to_i
           
