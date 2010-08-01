@@ -69,6 +69,15 @@ describe Calais::Response, :new do
     response.categories.map {|c| c.score }.should == [nil]
   end
   
+  it 'should find social tags' do
+    @response.socialtags.map {|c| c.name }.sort.should == ["Appropriate technology", "Bicycles", "Business_Finance", "Cycling", "Motorized bicycle", "Recreation", "Sustainability", "Sustainable transport", "Technology_Internet"]
+  end
+
+  it 'should have important scores associated with social tags' do
+    @response.socialtags.map {|c| c.importance.should be_a_kind_of(Integer) }
+  end
+  
+  
   it 'should find instances for each entity' do
     @response.entities.each {|e|
       e.instances.size.should > 0
