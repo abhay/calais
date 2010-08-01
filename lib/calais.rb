@@ -3,6 +3,7 @@ require 'net/http'
 require 'cgi'
 require 'iconv'
 require 'set'
+require 'date'
 
 require 'rubygems'
 require 'nokogiri'
