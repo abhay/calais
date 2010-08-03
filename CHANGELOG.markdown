@@ -1,5 +1,11 @@
 # Changes
 
+## 0.0.11
+
+* simple fix for some rubies not liking DateTime.parse without including date
+* tests for SocialTags
+* typo fix: SocailTag != SocialTag
+
 ## 0.0.10
 
 * community patch to expose SocialTags
