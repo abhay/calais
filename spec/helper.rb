@@ -1,5 +1,5 @@
 require 'rubygems'
-require 'spec'
+require 'rspec'
 require 'yaml'
 
 require File.dirname(__FILE__) + '/../lib/calais'
