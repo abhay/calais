@@ -41,7 +41,6 @@ Gem::Specification.new do |s|
 
   s.add_dependency("nokogiri", ">= 1.3.3")
   s.add_dependency("json", ">= 1.1.3")
-  s.add_dependency("curb", ">= 0.1.4")
 
   s.add_development_dependency("rspec", ">= 2.0.0")
 end
