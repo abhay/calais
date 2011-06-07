@@ -13,7 +13,7 @@ This is a very basic wrapper to the Open Calais API. It uses the POST endpoint a
 
     Calais.enlighten(
         :content => "The government of the United Kingdom has given corporations like fast food chain McDonald's the right to award high school qualifications to employees who complete a company training program."
-        :content_type => :text, 
+        :content_type => :raw,
         :license_id => 'your license id'
     )
 
@@ -23,7 +23,7 @@ If you want to do something more fun like getting all sorts of fun information a
 
     Calais.process_document(
         :content => "The government of the United Kingdom has given corporations like fast food chain McDonald's the right to award high school qualifications to employees who complete a company training program.",
-        :content_type => :text,
+        :content_type => :raw,
         :license_id => 'your license id'
     )
 
