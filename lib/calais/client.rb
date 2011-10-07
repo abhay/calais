@@ -27,13 +27,7 @@ module Calais
         "paramsXML" => params_xml
       }
 
-      @client ||= Curl::Easy.new
-      @client.url = @use_beta ? BETA_REST_ENDPOINT : REST_ENDPOINT
-      @client.timeout = HTTP_TIMEOUT
-
-      post_fields = post_args.map {|k,v| Curl::PostField.content(k, v) }
-
-      do_request(post_fields)
+      do_request(post_args)
     end
 
     def params_xml
@@ -73,6 +67,10 @@ module Calais
       params_node.to_xml(:indent => 2)
     end
 
+    def url
+      @url ||= URI.parse(calais_endpoint)
+    end
+
     private
       def check_params
         raise 'missing content' if @content.nil? || @content.empty?
@@ -103,11 +101,13 @@ module Calais
       end
 
       def do_request(post_fields)
-        unless @client.http_post(post_fields)
-          raise 'unable to post to api endpoint'
-        end
+        @request ||= Net::HTTP::Post.new(url.path)
+        @request.set_form_data(post_fields)
+        Net::HTTP.new(url.host, url.port).start {|http| http.request(@request)}.body
+      end
 
-        @client.body_str
+      def calais_endpoint
+         @use_beta ? BETA_REST_ENDPOINT : REST_ENDPOINT
       end
   end
 end
