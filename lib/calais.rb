@@ -1,5 +1,6 @@
 require 'digest/sha1'
 require 'net/http'
+require 'uri'
 require 'cgi'
 require 'iconv'
 require 'set'
@@ -8,7 +9,6 @@ require 'date'
 require 'rubygems'
 require 'nokogiri'
 require 'json'
-require 'curb'
 
 if RUBY_VERSION.to_f < 1.9
   $KCODE = "UTF8"

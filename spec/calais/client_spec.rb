@@ -66,7 +66,7 @@ describe Calais::Client, :enlighten do
   it 'provides access to the enlighten command on the generic rest endpoint' do
     @client.should_receive(:do_request).with(anything).and_return(SAMPLE_RESPONSE)
     @client.enlighten
-    @client.instance_variable_get(:@client).url.should == Calais::REST_ENDPOINT
+    @client.url.should == URI.parse(Calais::REST_ENDPOINT)
   end
 
   it 'provides access to the enlighten command on the beta rest endpoint' do
@@ -74,6 +74,6 @@ describe Calais::Client, :enlighten do
 
     @client.should_receive(:do_request).with(anything).and_return(SAMPLE_RESPONSE)
     @client.enlighten
-    @client.instance_variable_get(:@client).url.should == Calais::BETA_REST_ENDPOINT
+    @client.url.should == URI.parse(Calais::BETA_REST_ENDPOINT)
   end
 end
