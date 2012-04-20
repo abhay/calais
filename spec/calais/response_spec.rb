@@ -52,7 +52,7 @@ describe Calais::Response, :new do
 
     it 'should have relevance value' do
       geographies = @response.geographies
-      geographies.map { |e| e.relevance }.sort.uniq.should == %w[0.168 0.718 0.168]
+      geographies.map { |e| e.relevance }.sort.uniq.should == [0.168, 0.718]
     end
   end
 
