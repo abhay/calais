@@ -39,9 +39,21 @@ describe Calais::Response, :new do
     relations.map { |e| e.type }.sort.uniq.should == %w[GenericRelations PersonAttributes PersonCareer Quotation]
   end
 
-  it 'should extract geographies' do
-    geographies = @response.geographies
-    geographies.map { |e| e.name }.sort.uniq.should == %w[Australia Hobart,Tasmania,Australia Tasmania,Australia]
+  describe 'geographies' do
+    it 'should be extracted' do
+      geographies = @response.geographies
+      geographies.map { |e| e.name }.sort.uniq.should == %w[Australia Hobart,Tasmania,Australia Tasmania,Australia]
+    end
+
+    it 'should have relevance' do
+      geographies = @response.geographies
+      geographies.map { |e| e.relevance }.sort.uniq.should be_true
+    end
+
+    it 'should have relevance value' do
+      geographies = @response.geographies
+      geographies.map { |e| e.relevance }.sort.uniq.should == [0.168, 0.718]
+    end
   end
 
   it 'should extract relevances' do
