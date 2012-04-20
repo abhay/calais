@@ -48,3 +48,4 @@ You can install the Calais gem via Rubygems (`gem install calais`) or by buildin
 
 * [Paul Legato](http://www.economaton.com/): Help all around with the new response processor and implementation of the 3.1 API.
 * [Ryan Ong](http://www.ryanong.net/)
+* [Juan Antonio Chavez](https://github.com/TheNaoX): Geographies relevance
