@@ -13,7 +13,7 @@ module Calais
     }
 
     attr_accessor :submitter_code, :signature, :language, :submission_date, :request_id, :doc_title, :doc_date
-    attr_accessor :hashes, :entities, :relations, :geographies, :categories, :socialtags
+    attr_accessor :hashes, :entities, :relations, :geographies, :categories, :socialtags, :relevances
 
     def initialize(rdf_string)
       @raw_response = rdf_string
@@ -38,7 +38,7 @@ module Calais
     end
 
     class Geography
-      attr_accessor :name, :calais_hash, :attributes
+      attr_accessor :name, :calais_hash, :attributes, :relevance
     end
 
     class Category
@@ -173,6 +173,7 @@ module Calais
           geography.name = attributes.delete('name')
           geography.calais_hash = attributes.delete('subject')
           geography.attributes = attributes
+          geography.relevance = extract_relevance(geography.calais_hash.value)
 
           node.remove
           geography
@@ -211,6 +212,9 @@ module Calais
             end
           hsh.merge(node.name => value)
         end
+      end
+      def extract_relevance(value)
+        return @relevances[value]
       end
   end
 end
