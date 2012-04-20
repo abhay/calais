@@ -1,5 +1,12 @@
 # Changes
 
+## 0.0.12
+
+* added relevances to Geographies
+* improved doc
+* removed jeweler dependency and simplified Rakefile
+* bumped rspec requirement
+
 ## 0.0.11
 
 * simple fix for some rubies not liking DateTime.parse without including date
