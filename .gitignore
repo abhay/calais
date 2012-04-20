@@ -6,4 +6,3 @@ doc
 spec/fixtures/calais.yml
 .bundle
 Gemfile.lock
-/.idea/

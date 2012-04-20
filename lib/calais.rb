@@ -15,8 +15,6 @@ if RUBY_VERSION.to_f < 1.9
   require 'jcode'
 end
 
-$:.unshift File.expand_path(File.dirname(__FILE__)) + '/calais'
-
 require 'calais/client'
 require 'calais/response'
 require 'calais/error'
