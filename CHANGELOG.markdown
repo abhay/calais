@@ -1,5 +1,9 @@
 # Changes
 
+## 0.0.13
+
+* load path fix
+
 ## 0.0.12
 
 * added relevances to Geographies
