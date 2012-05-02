@@ -23,7 +23,9 @@ module Calais
     def enlighten
       post_args = {
         "licenseID" => @license_id,
-        "content" => "#{@content} ".encode(Encoding::UTF_8, :invalid => :replace, :undef => :replace, :replace => '')[0 .. -2],
+        "content" => RUBY_VERSION.to_f < 1.9 ?
+          Iconv.iconv('UTF-8//IGNORE', 'UTF-8',  "#{@content} ").first[0..-2] :
+          "#{@content} ".encode(Encoding::UTF_8, :invalid => :replace, :undef => :replace, :replace => '')[0 .. -2],
         "paramsXML" => params_xml
       }
 

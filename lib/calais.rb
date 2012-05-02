@@ -2,6 +2,7 @@ require 'digest/sha1'
 require 'net/http'
 require 'uri'
 require 'cgi'
+require 'iconv' if RUBY_VERSION.to_f < 1.9
 require 'set'
 require 'date'
 
