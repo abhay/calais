@@ -45,7 +45,7 @@ module Calais
       processing_node['c:reltagBaseURL'] = @reltag_base_url.to_s if @reltag_base_url
       
       processing_node['c:enableMetadataType'] = @metadata_enables.join(',') unless @metadata_enables.empty?
-      processing_node['c:docRDFaccessible'] = @store_rdf if @store_rdf
+      processing_node['c:docRDFaccessible'] = @store_rdf.to_s if @store_rdf
       processing_node['c:discardMetadata'] = @metadata_discards.join(';') unless @metadata_discards.empty?
       processing_node['c:omitOutputtingOriginalText'] = 'true' if @omit_outputting_original_text
       
