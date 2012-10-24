@@ -131,7 +131,7 @@ module Calais
         end
 
         @relevances = doc.root.xpath("rdf:Description/rdf:type[contains(@rdf:resource, '#{MATCHERS[:relevances]}')]/..").inject({}) do |acc, node|
-          subject_hash = node.xpath("c:subject[1]").first[:resource].split('/')[-1]
+          subject_hash = node.xpath("c:subject[1]").first[:resource]#.split('/')[-1]
           acc[subject_hash] = node.xpath("c:relevance[1]").first.content.to_f
 
           node.remove
@@ -139,7 +139,7 @@ module Calais
         end
 
         @entities = doc.root.xpath("rdf:Description/rdf:type[contains(@rdf:resource, '#{MATCHERS[:entities]}')]/..").map do |node|
-          extracted_hash = node['about'].split('/')[-1] rescue nil
+          extracted_hash = node['about']#.split('/')[-1] rescue nil
 
           entity = Entity.new
           entity.calais_hash = CalaisHash.find_or_create(extracted_hash, @hashes)
@@ -152,20 +152,17 @@ module Calais
           node.remove
           entity
         end
-
         @relations = doc.root.xpath("rdf:Description/rdf:type[contains(@rdf:resource, '#{MATCHERS[:relations]}')]/..").map do |node|
-          extracted_hash = node['about'].split('/')[-1] rescue nil
+          extracted_hash = node['about']#.split('/')[-1] rescue nil
 
           relation = Relation.new
           relation.calais_hash = CalaisHash.find_or_create(extracted_hash, @hashes)
           relation.type = extract_type(node)
           relation.attributes = extract_attributes(node.xpath("*[contains(name(), 'c:')]"))
           relation.instances = extract_instances(doc, extracted_hash)
-
           node.remove
           relation
         end
-
         @geographies = doc.root.xpath("rdf:Description/rdf:type[contains(@rdf:resource, '#{MATCHERS[:geographies]}')]/..").map do |node|
           attributes = extract_attributes(node.xpath("*[contains(name(), 'c:')]"))
 
@@ -187,7 +184,7 @@ module Calais
 
       def extract_instances(doc, hash)
         doc.root.xpath("rdf:Description/rdf:type[contains(@rdf:resource, '#{MATCHERS[:instances]}')]/..").select do |instance_node|
-          instance_node.xpath("c:subject[1]").first[:resource].split("/")[-1] == hash
+          instance_node.xpath("c:subject[1]").first[:resource]#.split("/")[-1] == hash
         end.map do |instance_node|
           instance = Instance.from_node(instance_node)
           instance_node.remove
@@ -197,7 +194,7 @@ module Calais
       end
 
       def extract_type(node)
-        node.xpath("*[name()='rdf:type']")[0]['resource'].split('/')[-1]
+        node.xpath("*[name()='rdf:type']")[0]['resource']#.split('/')[-1]
       rescue
         nil
       end
@@ -205,12 +202,12 @@ module Calais
       def extract_attributes(nodes)
         nodes.inject({}) do |hsh, node|
           value = if node['resource']
-              extracted_hash = node['resource'].split('/')[-1] rescue nil
+              extracted_hash = node['resource'] rescue nil
               CalaisHash.find_or_create(extracted_hash, @hashes)
             else
               node.content
             end
-          hsh.merge(node.name => value)
+          hsh.merge(node.name => value){|k,o,n| [o,n].flatten}
         end
       end
       def extract_relevance(value)
