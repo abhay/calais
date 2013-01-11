@@ -23,7 +23,7 @@ module Calais
     def enlighten
       post_args = {
         "licenseID" => @license_id,
-        "content" => Iconv.iconv('UTF-8//IGNORE', 'UTF-8',  "#{@content} ").first[0..-2],
+        "content" => "#{@content} ".encode(Encoding::UTF_8, :invalid => :replace, :undef => :replace, :replace => '')[0..-2],
         "paramsXML" => params_xml
       }
 
