@@ -150,7 +150,6 @@ module Calais
           node.remove
           entity
         end
-
         @relations = doc.root.xpath("rdf:Description/rdf:type[contains(@rdf:resource, '#{MATCHERS[:relations]}')]/..").map do |node|
           extracted_hash = node['rdf:about'].split('/')[-1] rescue nil
 
