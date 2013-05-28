@@ -10,9 +10,8 @@ Gem::Specification.new do |gem|
 	gem.summary = 'A Ruby interface to the Calais Web Service'
 	gem.description = 'A Ruby interface to the Calais Web Service'
 
-	gem.authors = ['Abhay Kumar']
-	gem.email = 'info@opensynapse.net'
-	gem.homepage = 'http://github.com/abhay/calais'
+	gem.authors = ['enigmatic00']
+	gem.homepage = 'https://github.com/enigmatic00/calais'
 
 	gem.add_dependency("nokogiri", ">= 1.3.3")
   gem.add_dependency("json", ">= 1.1.3")

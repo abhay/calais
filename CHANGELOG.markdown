@@ -1,4 +1,6 @@
 # Changes
+## 0.0.14
+* fix problem with Nokogiri 1.5.6
 
 ## 0.0.13
 
