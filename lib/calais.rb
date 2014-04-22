@@ -8,7 +8,7 @@ require 'date'
 
 require 'rubygems'
 require 'nokogiri'
-require 'json'
+require 'json' unless defined?(ActiveSupport) and defined?(ActiveSupport::JSON)
 
 if RUBY_VERSION.to_f < 1.9
   $KCODE = "UTF8"
