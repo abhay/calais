@@ -105,7 +105,12 @@ module Calais
       def do_request(post_fields)
         @request ||= Net::HTTP::Post.new(url.path)
         @request.set_form_data(post_fields)
-        Net::HTTP.new(url.host, url.port).start {|http| http.request(@request)}.body
+        resp = Net::HTTP.new(url.host, url.port).start {|http| http.request(@request)}
+        if resp.header[ 'Content-Encoding' ].eql?( 'gzip' ) then
+          Zlib::GzipReader.new( StringIO.new( resp.body ) ).read
+        else
+          resp.body
+        end
       end
 
       def calais_endpoint
