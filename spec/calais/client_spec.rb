@@ -4,48 +4,14 @@ describe Calais::Client, :new do
   it 'accepts arguments as a hash' do
     client = nil
 
-    lambda { client = Calais::Client.new(:content => SAMPLE_DOCUMENT, :license_id => LICENSE_ID) }.should_not raise_error
+    expect(lambda { client = Calais::Client.new(:content => SAMPLE_DOCUMENT, :license_id => LICENSE_ID) }).not_to raise_error
 
-    client.license_id.should == LICENSE_ID
-    client.content.should == SAMPLE_DOCUMENT
-  end
-
-  it 'accepts arguments as a block' do
-    client = nil
-
-    lambda {
-      client = Calais::Client.new do |c|
-        c.content = SAMPLE_DOCUMENT
-        c.license_id = LICENSE_ID
-      end
-    }.should_not raise_error
-
-    client.license_id.should == LICENSE_ID
-    client.content.should == SAMPLE_DOCUMENT
+    expect(client.license_id).to eq(LICENSE_ID)
+    expect(client.content).to eq(SAMPLE_DOCUMENT)
   end
 
   it 'should not accept unknown attributes' do
-    lambda { Calais::Client.new(:monkey => 'monkey', :license_id => LICENSE_ID) }.should raise_error(NoMethodError)
-  end
-end
-
-describe Calais::Client, :params_xml do
-  it 'returns an xml encoded string' do
-    client = Calais::Client.new(:content => SAMPLE_DOCUMENT, :license_id => LICENSE_ID)
-    client.params_xml.should == %[<c:params xmlns:c=\"http://s.opencalais.com/1/pred/\" xmlns:rdf=\"http://www.w3.org/1999/02/22-rdf-syntax-ns#\">\n  <c:processingDirectives/>\n  <c:userDirectives/>\n</c:params>]
-
-    client.content_type = :xml
-    client.output_format = :json
-    client.reltag_base_url = 'http://opencalais.com'
-    client.calculate_relevance = true
-    client.metadata_enables = Calais::KNOWN_ENABLES
-    client.metadata_discards = Calais::KNOWN_DISCARDS
-    client.allow_distribution = true
-    client.allow_search = true
-    client.external_id = Digest::SHA1.hexdigest(client.content)
-    client.submitter = 'calais.rb'
-
-    client.params_xml.should == %[<c:params xmlns:c="http://s.opencalais.com/1/pred/" xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#">\n  <c:processingDirectives c:contentType="text/xml" c:outputFormat="application/json" c:reltagBaseURL="http://opencalais.com" c:enableMetadataType="GenericRelations,SocialTags" c:discardMetadata="er/Company;er/Geo;er/Product"/>\n  <c:userDirectives c:allowDistribution="true" c:allowSearch="true" c:externalID="1a008b91e7d21962e132bc1d6cb252532116a606" c:submitter="calais.rb"/>\n</c:params>]
+    expect(lambda { Calais::Client.new(:monkey => 'monkey', :license_id => LICENSE_ID) }).to raise_error(NoMethodError)
   end
 end
 
@@ -57,23 +23,47 @@ describe Calais::Client, :enlighten do
       c.content_type = :xml
       c.output_format = :json
       c.calculate_relevance = true
-      c.metadata_enables = Calais::KNOWN_ENABLES
-      c.allow_distribution = true
-      c.allow_search = true
     end
   end
 
   it 'provides access to the enlighten command on the generic rest endpoint' do
     @client.should_receive(:do_request).with(anything).and_return(SAMPLE_RESPONSE)
     @client.enlighten
-    @client.url.should == URI.parse(Calais::REST_ENDPOINT)
+    expect(@client.url).to eq(URI.parse(Calais::REST_ENDPOINT))
   end
 
-  it 'provides access to the enlighten command on the beta rest endpoint' do
-    @client.use_beta = true
+  it 'raises an error if there is no license_id' do
+    @client.license_id = nil
+    expect{ @client.enlighten }.to raise_error("missing license id")
+  end
 
-    @client.should_receive(:do_request).with(anything).and_return(SAMPLE_RESPONSE)
-    @client.enlighten
-    @client.url.should == URI.parse(Calais::BETA_REST_ENDPOINT)
+  it 'raises an error if the content_type is not in AVAILABLE_CONTENT_TYPES' do
+    @client.content_type = "stuff"
+    expect{ @client.enlighten }.to raise_error("unknown content type")
+  end
+
+  it 'raises an error if the content_type is not provided' do
+    @client.content_type = nil
+    expect{ @client.enlighten }.to raise_error("unknown content type")
+  end
+
+  it 'raises an error if the content length is less than 1' do
+    @client.content = nil
+    expect{ @client.enlighten }.to raise_error("missing content")
+  end
+
+  it 'raises an error if the content length is greater than 100_000' do
+    @client.content = ("b"*100001)
+    expect{ @client.enlighten }.to raise_error("content is too large")
+  end
+
+  it 'does not require output_format' do
+    @client.output_format = nil
+    expect{ @client.enlighten }.not_to raise_error
+  end
+
+  it 'raises an error if the provided output_format is not in AVAILABLE_OUTPUT_FORMATS' do
+    @client.output_format = 'fake'
+    expect{ @client.enlighten }.to raise_error("unknown output format")
   end
 end

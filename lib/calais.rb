@@ -21,28 +21,21 @@ require 'calais/response'
 require 'calais/error'
 
 module Calais
-  REST_ENDPOINT = "http://api.opencalais.com/enlighten/rest/"
-  BETA_REST_ENDPOINT = "http://beta.opencalais.com/enlighten/rest/"
+  REST_ENDPOINT = "https://api.thomsonreuters.com/permid/calais"
 
   AVAILABLE_CONTENT_TYPES = {
     :xml => 'text/xml',
     :html => 'text/html',
-    :htmlraw => 'text/htmlraw',
-    :raw => 'text/raw'
+    :raw => 'text/raw',
+    :pdf => 'application/pdf'
   }
 
   AVAILABLE_OUTPUT_FORMATS = {
     :rdf => 'xml/rdf',
-    :simple => 'text/simple',
-    :microformats => 'text/microformats',
-    :json => 'application/json'
+    :json => 'application/json',
+    :n3 => 'text/n3'
   }
 
-  KNOWN_ENABLES = ['GenericRelations', 'SocialTags']
-  KNOWN_DISCARDS = ['er/Company', 'er/Geo', 'er/Product']
-
-  MAX_RETRIES = 5
-  HTTP_TIMEOUT = 60
   MIN_CONTENT_SIZE = 1
   MAX_CONTENT_SIZE = 100_000
 

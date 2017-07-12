@@ -1,12 +1,25 @@
 # Calais #
 A Ruby interface to the [Open Calais Web Service](http://opencalais.com)
 
+## June 12, 2017 updates##
+made by Britney Wright
+
+Gem broke due to updates to the Open Calais API.
+
+- change API endpoint URL
+- Simplified the API request call
+- Added headers for required metadata
+- Updated specs
+- Added current [Open Calais API guide](https://raw.githubusercontent.com/snsdigitaldevs/calais/master/public/ThomsonReutersOpenCalaisAPIUserGuideR10_8.pdf) to gem for future reference, should the API change again.
+- **Note**: key in in `circle.yml.sample` is old API key. Still active, but not the one we use in when passing arguments to the gem from the Holos app. 
+
+---
 ## Features ##
 * Accepts documents in text/plain, text/xml and text/html format.
 * Basic access to the Open Calais API's Enlighten action.
     * Output is RDF representation of input document.
 * Single function ability to extract names, entities and geographies from given text.
-  
+
 ## Synopsis ##
 
 This is a very basic wrapper to the Open Calais API. It uses the POST endpoint and currently supports the Enlighten action. Here's a simple call:
@@ -42,7 +55,7 @@ You can install the Calais gem via Rubygems (`gem install calais`) or by buildin
 
 ## Authors ##
 
-* [Abhay Kumar](http://opensynapse.net) 
+* [Abhay Kumar](http://opensynapse.net)
 
 ## Acknowledgements ##
 
