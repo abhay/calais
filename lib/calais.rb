@@ -21,7 +21,7 @@ require 'calais/response'
 require 'calais/error'
 
 module Calais
-  REST_ENDPOINT = "https://api.thomsonreuters.com/permid/calais"
+  REST_ENDPOINT = 'https://api-eit.refinitiv.com/permid/calais'
 
   AVAILABLE_CONTENT_TYPES = {
     :xml => 'text/xml',
